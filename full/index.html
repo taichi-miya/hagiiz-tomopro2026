@@ -2,11 +2,9 @@
 <html lang="ja">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="robots" content="noindex, nofollow">
-<title>【事前プレビュー】科学を自分ごとに。東北の子どもと大人へ、博士学生の挑戦｜サイエンスイベント同好会HagiiZ</title>
-<meta property="og:title" content="【事前プレビュー】科学を自分ごとに。東北の子どもと大人へ、博士学生の挑戦">
-<meta property="og:description" content="東北大学の博士学生を中心とする学生団体HagiiZが、10月1日から東北大学基金のクラウドファンディング「ともプロ！2026」に挑戦します。">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ともプロ！2026 本番デザインプレビュー（HagiiZ）</title>
 <style>
 /* ===== 東北大学基金サイトの基本設定（再現） ===== */
 html{font-size:62.5%;}
@@ -919,80 +917,655 @@ main#contents{max-width:1160px;margin:0 auto;padding:30px 20px 60px;}
 .pv-supporter__affil{color:#666;font-size:1.4rem;margin:0 0 8px;}
 .pv-supporter__comment{font-size:1.5rem;}
 .pv-supporter__comment.pv-pending{color:#a05a00;background:#fff6e0;border:1px solid #eed9a0;padding:4px 10px;display:inline-block;font-size:1.35rem;}
-
-.pv-banner{background:#3b1f6b;color:#fff;font-size:1.4rem;line-height:1.6;padding:12px 16px;text-align:center;}
-.pv-banner a{color:#ffd54f;font-weight:bold;}
-.pv-banner small{display:block;color:#d9cdee;font-size:1.2rem;margin-top:4px;}
-.c-project-header__contents{display:none;}
-.base-container .c-project-header .c-project-header__img{width:100%;}
-.pv-foot a{color:#ffd54f;}
 </style>
 </head>
 <body>
-<div class="pv-banner">
-  これは10月1日（木）公開予定のクラウドファンディング「ともプロ！2026」プロジェクトページの<b>事前プレビュー</b>です（内容は公開までに微修正されます）。<br>
-  公開のお知らせは HagiiZ公式LINE でお届けします → <a href="https://lin.ee/X78sq8H" target="_blank" rel="noopener">友だち追加はこちら</a>
-  <small>東北大学基金のページ体裁を再現したプレビューであり、実サイトではありません。寄附の受付は10月1日以降、東北大学基金の正式ページで行います。</small>
+<div class="pv-topbar">
+  <span class="lbl">案の切り替え（プレビュー用・本番には出ません）：</span>
+  <button class="sw is-current" data-an="d">D案：統合版（推奨）<small>科学を自分ごとに。東北の子どもと大人へ、博士学生の挑戦</small></button><button class="sw" data-an="a">A案：信頼・データ型<small>東北の子どもと大人に科学の楽しさを。博士学生の4つの挑戦</small></button><button class="sw" data-an="b">B案：ストーリー型<small>博士学生の私が、遊びと対話で科学と社会の架け橋になる</small></button><button class="sw" data-an="c">C案：シーン型<small>「博士って何する人？」遊びと対話で答える4つの挑戦</small></button>
+  <span class="pv-editbar">
+    <button id="btnEdit" class="ed">✏️ 編集モード</button>
+    <button id="btnImg" class="ed">🖼 画像を挿入</button>
+    <button id="btnExport" class="ed">💾 テキスト書き出し</button>
+    <button id="btnReset" class="ed">↩️ 編集を破棄</button>
+    <span id="editState"></span>
+  </span>
+  <span style="margin-left:auto;color:#aaa;">寄附総額・支援者数は公開直後の想定（0円）で表示</span>
 </div>
+<div class="pv-sitehead"><div class="in">
+  <div class="logo">東北大学基金<small>TOHOKU UNIVERSITY FUND</small></div>
+  <nav><span>基金の概要</span><span>寄附の種類</span><span>寄附の方法</span><span>顕彰制度</span></nav>
+  <span class="donate">寄附をする</span>
+</div></div>
 <main id="contents" class="base-container">
+
 <div class="an-wrap is-current" data-an-body="d" data-baseline="20260830d">
 <h1 class="c-title01">科学を自分ごとに。東北の子どもと大人へ、博士学生の挑戦</h1>
 <div class="c-project-header">
-  <div class="c-project-header__img pv-hero pv-filled"><img src="img/hero.jpg" alt="ヘッダー画像" data-name="ヘッダー.png"></div>
-  <div class="c-project-header__contents"></div>
+  <div class="c-project-header__img pv-hero pv-filled"><img src="../img/hero.jpg" alt="ヘッダー画像" data-name="ヘッダー.png"></div>
+  <div class="c-project-header__contents">
+    <div class="c-project-header__contents-inner">
+      <dl class="c-project-header__amount"><dt>現在の寄附総額</dt><dd><strong>0</strong> 円</dd></dl>
+      <div class="c-project-header__bar"><p class="c-project-header__bar_num">0%</p><progress value="0" max="100"></progress></div>
+      <p class="c-project-header__goal">目標金額 500,000円</p>
+      <p class="c-project-header__title">ご支援いただいた皆様</p>
+      <ul class="c-project-header__info">
+        <li><span class="c-project-header__info-title">（個人）</span><span class="c-project-header__info-text"><strong>0</strong> 名</span></li>
+        <li><span class="c-project-header__info-title">（法人・団体）</span><span class="c-project-header__info-text"><strong>0</strong> 社・団体</span></li>
+      </ul>
+    </div>
+    <div class="c-project-header__sns pv-sns"><span>シェア</span><span>ポスト</span><span>LINE</span></div>
+  </div>
 </div>
 <div class="c-project-body">
   <div class="c-project-body__main">
-    
+    <nav class="c-tabs"><ul>
+<li class="is-active" data-tab-index="1">プロジェクト概要</li>
+<li data-tab-index="2"><span data-badge-post="0">新着情報</span></li>
+<li data-tab-index="3"><span data-badge-message="0">メッセージ</span></li>
+</ul></nav>
     <div class="c-tab-body is-active"><div class="c-editor">
 <h2 class="u-mt-0">科学を自分ごとに。東北の子どもと大人へ、博士学生の挑戦</h2>
 <p>「――実は、このゲームのテーマは放射線でした。」</p>
 <p>ボードゲームで遊びきった後にそう種明かしをすると、小学生と親御さんの目の色が変わります。「え、こわいものじゃなかったの？」。夢中で遊んだ体験があるから、放射線が初めて「自分ごと」になる瞬間です。</p>
 <p>私たちは、東北大学の博士学生を中心とする33名の学生団体「サイエンスイベント同好会HagiiZ（ハギーズ）」。科学を自分ごととして考えられる場を、遊びと対話でつくる——この思想のもと、①高校への出前授業、②科学を楽しみながら学ぶボードゲーム、③探究の失敗を体験する脱出ゲーム、④ゲストハウスのサイエンスカフェに挑みます。目標金額は50万円。どうか力を貸してください。</p>
-<div class="pv-img pv-img-filled"><img src="img/boardgame.jpg" alt="出展イベントでのボードゲームの様子" data-name="子どもたちがボードゲームをプレイする様子.jpg"></div>
+<div class="pv-img pv-img-filled"><img src="../img/boardgame.jpg" alt="出展イベントでのボードゲームの様子" data-name="子どもたちがボードゲームをプレイする様子.jpg"></div>
 <h3>「博士って何する人？」から始まった場づくり</h3>
 <p>私は、東北大学大学院工学研究科で原子力・核融合材料を研究する博士学生、宮岸太一です。放射線が材料に当たったとき、その内部で何が起きるのか——目に見えない世界の「わからない」に、毎日向き合っています。</p>
 <p>研究室の一歩外に出ると、よくこの質問をされます。「博士って、何をしている人なの？」。答えるたびに気づかされました。博士学生が何に取り組んでいるのか、社会にはあまり知られていない。研究者と社会の間には、思っている以上の距離があるのだと。</p>
 <p>もう一つ、忘れられない実感があります。私の研究は原子力に関わる分野です。震災と原発事故を経験した東北では、放射線という言葉を聞いた瞬間に「怖い」で思考が止まってしまう人が少なくありません。数値の話をする前に、心の扉が閉じてしまう。それはその人のせいではなく、科学の側が「怖くない出会い方」を用意してこなかったからではないか——原子力材料を学ぶ自分に何ができるのか、ずっと考えてきました。</p>
+<div class="pv-img"><span>画像挿入：サイエンスカフェ等で市民と語り合う様子<br>（横長・2MB以上の実写真が入ります）</span></div>
 <p>転機は、北海道大学CoSTEP（科学技術コミュニケーションの専門教育プログラム）での学びでした。正しい知識を一方的に押し付けても、人の気持ちも行動も変わらない。人が本当に考え始めるのは、科学が「自分ごと」になった瞬間だけ。必要なのは立派な講演ではなく、科学を自分ごとにできる「場」です。そしてその場で隣に座るのは、偉い教授よりも、年齢も立場も社会に近い博士学生のほうがいい。2024年秋に博士学生の仲間と団体HagiiZを立ち上げ、埼玉県立春日部高校の図書室で高校生と、福島県土湯温泉の足湯で市民と、原子力発電を語り合うたび、その手応えは確信に変わっていきました。</p>
 <p>その確信を「使命感」に変えたのが、今年（2026年）2月からの米国MIT研究留学です。世界最高峰の研究環境より心に残ったのは、博士人材が大学の外でも社会の当たり前として頼られ、科学と市民の距離が近いことでした。日本との差に悔しさを覚えると同時に、思い知ったのです。この景色は、誰か一人の優秀な研究者が変えるのではない。いま博士課程にいる私たちが、あちこちに「場」をつくることでしか変わらない。一人の発信には限界がある——仲間とやろう、と。</p>
-<div class="pv-img pv-img-filled"><img src="img/mit.jpg" alt="MIT滞在時の研究室の様子" data-name="MIT研究室.JPG"></div>
+<div class="pv-img pv-img-filled"><img src="../img/mit.jpg" alt="MIT滞在時の研究室の様子" data-name="MIT研究室.JPG"></div>
 <p>帰国した春、博士学生団体のHagiiZを母体に、学部生も加わった「サイエンスイベント同好会HagiiZ」を仲間と共に発足させ、チームは専攻も学年も異なる33名になりました。今年6月、仙台のゲストハウス梅鉢で開いた市民向けサイエンスカフェの第1回。旅人と地元の方のべ14名が、同じ食卓で科学や研究を「身近なこと」や「生活を支える営み」として語り合う夜を見て、確信は熱に変わりました。科学を自分ごとにする場は、つくれる。もっと科学を盛り上げたい。その熱をかたちにしたのが、この4つの挑戦です。</p>
-<div class="pv-img pv-img-filled"><img src="img/cafe.jpg" alt="ゲストハウス梅鉢での第1回サイエンスカフェ" data-name="ゲストハウスサイエンスカフェ.jpg"></div>
+<div class="pv-img pv-img-filled"><img src="../img/cafe.jpg" alt="ゲストハウス梅鉢での第1回サイエンスカフェ" data-name="ゲストハウスサイエンスカフェ.jpg"></div>
 <h3>4つの「場」と実績、ご支援の使いみち</h3>
 <p>ご支援をもとに、2026年度から2027年度末までの約2年間、「科学を自分ごとにする場」を4つのかたちで実施します。</p>
 <p><strong>1. 高校への出前授業</strong>——東北地方の高校5校を訪問。数年前まで同じ教室にいた博士学生が、進路選択や失敗、いまの研究のたのしさや苦労をありのままに語り、教科の学びと社会のつながりを発見するグループワークと対話を組み合わせます。「受験のための勉強」が「自分の未来につながる学び」になる場です。</p>
 <p><strong>2. 科学を楽しみながら学ぶボードゲーム</strong>——現在は、放射線を身近なものに喩えた3種類（「はなってバリア」「ダッシュ！ごほうびそうだつせん」「おならおじさん」）を開発中。すでに学都「仙台・宮城」サイエンス・デイと河北新報社主催「楽しい理科のはなし2026」に出展し、小学生の親子のべ300人以上に遊んでいただきました。遊びきった後に種明かしをする、知識を押し付けない設計です。改良を重ね、学校導入と一般販売まで展開します。その後は、ノウハウを生かして放射線以外のテーマのボードゲームを継続開発する予定です。</p>
+<div class="pv-img"><span>画像挿入：出展イベントでのボードゲームの様子<br>（横長・2MB以上の実写真が入ります）</span></div>
 <p><strong>3. 探究の失敗を疑似体験する脱出ゲーム</strong>——高校の探究学習（※生徒が自ら問いを立て、調べ、まとめる授業）でつまずきがちな「結論ありきのデータ集め」などの失敗を、あえて疑似体験して抜け出す謎解き教材。毎日失敗している博士学生だからこそつくれる教材を、学校現場で実証します。</p>
 <p><strong>4. ゲストハウスのサイエンスカフェ</strong>——ゲストハウスでの第1回（のべ14名参加）を年10回以上に拡大。防災・震災など東北ならではのテーマや、学び続けてきた博士学生だからこそ話せる最先端の科学を、地元の方と全国・世界からの旅人が同じ食卓で考えます。開催ノウハウはマニュアル化してWebで無償公開します。</p>
 <p>4つのすべての活動で、質問紙調査（※参加前後のアンケートで理解や意識の変化を測る調査）により効果を測定し、学会発表・論文化と参加者への平易な報告書の両方で還元します。</p>
 <p><strong>ご支援の使いみち（目標金額：50万円）</strong>——内訳と「あなたのご支援でできること」は、下の表にまとめました。</p>
-<div class="pv-img pv-img-filled"><img src="img/budget.png" alt="ご支援の使いみち（内訳と支援の目安）" data-name="使途と支援の目安_画像v2.png"></div>
+<div class="pv-img pv-img-filled"><img src="../img/budget.png" alt="ご支援の使いみち（内訳と支援の目安）" data-name="使途と支援の目安_画像v2.png"></div>
 <h3>500人の「自分ごと」を、東北の文化に育てる</h3>
 <p>直接の目標は、出前授業・教材導入校あわせて8校以上、体験者累計500名以上です。授業前後の質問紙調査で科学的理解の正答率20%以上の向上を成功指標とし、ボードゲームと脱出ゲームの2教材を完成させて学校・企業等へ10件導入、サイエンスカフェは年10回以上・提携施設5箇所以上を目指します。効果は分析して学会発表・論文化まで行い、「実施しました」で終わらせず、誰もが検証・再現できるモデルとして残します。</p>
 <p>波及効果は三つあります。第一に、教材と開催マニュアルの公開により、私たちが行けない教室でも先生方や全国の学生が同じ場を開けるようになり、教員の負担軽減と教育格差の縮小につながります。第二に、震災を経験した東北で生まれた防災・放射線の学びが、ゲストハウスに集う旅人を通じて全国へ、世界へ広がります。第三に、博士学生の等身大の姿に触れた子どもたちにとって、研究者が「テレビの中の人」ではなく「一緒に遊んだお兄さん・お姉さん」になり、身近なロールモデルとして次世代を育てます。10年後の社会を支える人の裾野を、東北から広げます。</p>
-<div class="pv-img pv-img-filled"><img src="img/outcomes.png" alt="直接の目標と3つの波及効果" data-name="成果と波及効果_画像v1.png"></div>
+<div class="pv-img pv-img-filled"><img src="../img/outcomes.png" alt="直接の目標と3つの波及効果" data-name="成果と波及効果_画像v1.png"></div>
 <h3>科学が「自分たちのもの」になる10年後へ</h3>
 <p>クラウドファンディングという形を選んだのは、資金のためだけではありません。「科学を自分ごとにする場」づくりを、ご支援くださる皆さんと一緒に進める文化にしたいからです。</p>
 <p>私たちには思い描く10年後があります。あのとき種明かしに目を丸くした子が、理科の授業で真っ先に手を挙げている。脱出ゲームで悔しがった高校生が、自分の問いで探究を始めている。ゲストハウスの食卓にいた旅人が、自分の町で防災を語っている。そしてそのそばに、博士学生が当たり前にいる——科学が「誰かのもの」ではなく「自分たちのもの」になっている風景です。</p>
 <p>科学を盛り上げるのに、特別な才能は要りません。必要なのは、出会いの場と、隣に座る誰かです。私たちはその場をつくり続けます。ご支援はもちろん、このページを身近な方に紹介していただくことも大きな力になります。活動の様子は随時このページで報告し、「あなたの支援がこう活きた」を数字と写真でお届けします。東北から科学を盛り上げる挑戦、どうか一緒に進んでください。よろしくお願いいたします。</p>
-<div class="pv-img pv-img-filled"><img src="img/members.jpg" alt="サイエンスイベント同好会HagiiZ 団体写真" data-name="メンバー集合写真.JPG"></div>
+<div class="pv-img pv-img-filled"><img src="../img/members.jpg" alt="サイエンスイベント同好会HagiiZ 団体写真" data-name="メンバー集合写真.JPG"></div>
 <h3>応援コメント</h3>
-<p>各分野でご活躍の皆様から応援コメントを頂戴しているところです。公開時に掲載します。</p>
+<p>本プロジェクトには、各分野でご活躍される皆様から応援コメントをいただいています。</p>
+<div class="pv-supporters">
+  <div class="pv-supporter">
+    <div class="pv-supporter__photo"><span>顔写真</span></div>
+    <div class="pv-supporter__body">
+      <p class="pv-supporter__name">笠田 竜太</p>
+      <p class="pv-supporter__affil">東北大学 金属材料研究所 教授／サイエンスイベント同好会HagiiZ 顧問教員</p>
+      <p class="pv-supporter__comment">現代の博士課程の学生は自らの研究を深く尖らせる必要がある一方で、狭い専門性の中に閉じこもらない広い視野を持つことも求められます。HagiiZの学生たちは、それぞれの専門性を高めつつ、異なる分野の学生と協働し、科学を社会に発信することで、自らの研究の意味や在り方を問い直しています。さらに特筆すべきは、当代の博士課程の学生だけの単発の活動に終わらせず、学部生を巻き込み、次世代へ継承するサークルという形を選んだことです。全国的に見てもユニークなこのチャレンジが、「科学を自分ごとにする」文化として東北大学に根付き、社会へ広がっていくことを期待しています。</p>
+    </div>
+  </div>
+  <div class="pv-supporter">
+    <div class="pv-supporter__photo"><img src="../img/supporters/02.jpg" alt="奥本素子"></div>
+    <div class="pv-supporter__body">
+      <p class="pv-supporter__name">奥本 素子</p>
+      <p class="pv-supporter__affil">北海道大学 科学技術コミュニケーション教育研究部門（CoSTEP） 部門長</p>
+      <p class="pv-supporter__comment">学校では正解のある科学しか習いませんが、実は科学にはもう一つの側面があります。それが今研究者が取り組んでいる、正解がなく、日々情報が更新していく「新しい科学」です。生成AIやワクチンなど、私たちの日常にはそれらがよく利用されています。<br>正解のない新しい科学は、研究者だけでなく、社会のみんなとこの科学をどう使うかを考えていく必要があります。HagiiZは実際に市民や子供たちと対話する活動を始めています。研究するだけでなく、研究のその先の社会を見つめていく、そんな新しいタイプの大学院生の活動です。こんな大学院生を応援することは、結果として私たちが後悔せずに科学を使い続ける未来のためなのだと思います。</p>
+    </div>
+  </div>
+  <div class="pv-supporter">
+    <div class="pv-supporter__photo"><span>顔写真</span></div>
+    <div class="pv-supporter__body">
+      <p class="pv-supporter__name">Michael Short</p>
+      <p class="pv-supporter__affil">マサチューセッツ工科大学（MIT） 教授</p>
+      <p class="pv-supporter__comment pv-pending">（応援コメント準備中：8/31締切で依頼中・英文＋和訳を掲載予定）</p>
+    </div>
+  </div>
+  <div class="pv-supporter">
+    <div class="pv-supporter__photo"><span>顔写真</span></div>
+    <div class="pv-supporter__body">
+      <p class="pv-supporter__name">石川 真澄</p>
+      <p class="pv-supporter__affil">東京電力グループ 東双みらいテクノロジー 社長</p>
+      <p class="pv-supporter__comment pv-pending">（応援コメント準備中：8/31締切で依頼中）</p>
+    </div>
+  </div>
+  <div class="pv-supporter">
+    <div class="pv-supporter__photo"><span>顔写真</span></div>
+    <div class="pv-supporter__body">
+      <p class="pv-supporter__name">上田 啓瑚</p>
+      <p class="pv-supporter__affil">防災科学技術研究所</p>
+      <p class="pv-supporter__comment pv-pending">（応援コメント準備中：別担当が依頼済み）</p>
+    </div>
+  </div>
+  <div class="pv-supporter">
+    <div class="pv-supporter__photo"><span>顔写真</span></div>
+    <div class="pv-supporter__body">
+      <p class="pv-supporter__name">阿部 乳坊</p>
+      <p class="pv-supporter__affil">アーティスト（台湾を拠点に活動）</p>
+      <p class="pv-supporter__comment pv-pending">（応援コメント準備中：8/31締切で依頼中）</p>
+    </div>
+  </div>
+  <div class="pv-supporter">
+    <div class="pv-supporter__photo"><span>顔写真</span></div>
+    <div class="pv-supporter__body">
+      <p class="pv-supporter__name">ゲストハウス梅鉢 オーナー（お名前確認中）</p>
+      <p class="pv-supporter__affil">ゲストハウス梅鉢</p>
+      <p class="pv-supporter__comment">「新たな世界観とのワクワクする出会い」という、ゲストハウス梅鉢のコンセプトに一致する企画だと感じ、開催を快諾しました。当日は、偶然イベントの日に訪れた小学生のゲストが、大学生のお兄さんの宇宙の話を目を輝かせながら聞く姿が印象的でした。彼らの活動を通して、多くの人が科学に親しみ、関わるすべての人の未来が明るく照らされていくことを願っています。</p>
+    </div>
+  </div>
+  <div class="pv-supporter">
+    <div class="pv-supporter__photo"><span>ロゴ・写真</span></div>
+    <div class="pv-supporter__body">
+      <p class="pv-supporter__name">U35防災ゼミ</p>
+      <p class="pv-supporter__affil">（所属表記確認中）</p>
+      <p class="pv-supporter__comment pv-pending">（応援コメント準備中：別担当が依頼済み）</p>
+    </div>
+  </div>
+</div>
     </div></div>
   </div>
   <div class="c-project-body__sub">
     <div class="c-project-owner">
-      <p class="c-project-owner__thumbnail pv-owner pv-filled"><img src="img/owner.jpg" alt="プロジェクトオーナー 宮岸太一" data-name="オーナー画像.JPG"></p>
+      <p class="c-project-owner__thumbnail pv-owner pv-filled"><img src="../img/owner.jpg" alt="プロジェクトオーナー 宮岸太一" data-name="オーナー画像.JPG"></p>
       <p class="c-project-owner__title">プロジェクトオーナー</p>
       <p class="c-project-owner__contents">サイエンスイベント同好会HagiiZ<br>代表<br>宮岸太一</p>
     </div>
   </div>
 </div>
 </div>
-
+<div class="an-wrap" data-an-body="a" data-baseline="1e239cbf">
+<h1 class="c-title01">東北の子どもと大人に科学の楽しさを。博士学生の4つの挑戦</h1>
+<div class="c-project-header">
+  <div class="c-project-header__img pv-hero"><span>ヘッダー画像（横長・2MB以上）<br>例：団体写真／イベントの様子</span></div>
+  <div class="c-project-header__contents">
+    <div class="c-project-header__contents-inner">
+      <dl class="c-project-header__amount"><dt>現在の寄附総額</dt><dd><strong>0</strong> 円</dd></dl>
+      <div class="c-project-header__bar"><p class="c-project-header__bar_num">0%</p><progress value="0" max="100"></progress></div>
+      <p class="c-project-header__goal">目標金額 500,000円</p>
+      <p class="c-project-header__title">ご支援いただいた皆様</p>
+      <ul class="c-project-header__info">
+        <li><span class="c-project-header__info-title">（個人）</span><span class="c-project-header__info-text"><strong>0</strong> 名</span></li>
+        <li><span class="c-project-header__info-title">（法人・団体）</span><span class="c-project-header__info-text"><strong>0</strong> 社・団体</span></li>
+      </ul>
+    </div>
+    <div class="c-project-header__sns pv-sns"><span>シェア</span><span>ポスト</span><span>LINE</span></div>
+  </div>
+</div>
+<div class="c-project-body">
+  <div class="c-project-body__main">
+    <nav class="c-tabs"><ul>
+<li class="is-active" data-tab-index="1">プロジェクト概要</li>
+<li data-tab-index="2"><span data-badge-post="0">新着情報</span></li>
+<li data-tab-index="3"><span data-badge-message="0">メッセージ</span></li>
+</ul></nav>
+    <div class="c-tab-body is-active"><div class="c-editor">
+<h2 class="u-mt-0">東北の子どもと大人に科学の楽しさを。博士学生の4つの挑戦</h2>
+<p>「博士学生って、何をしている人？」——そう聞かれるたびに、私たちはこう答えます。「わからないことに向き合い、考え続けている人」だと。</p>
+<p>私たちは、東北大学の博士学生を中心とする33名の学生団体「サイエンスイベント同好会HagiiZ（ハギーズ）」です。①高校への出前授業、②放射線を楽しく学ぶボードゲーム、③探究の失敗を疑似体験する脱出ゲーム、④ゲストハウスの食卓を囲むサイエンスカフェ——4つの「遊びと対話」で、東北の小中高生から市民まで、科学との架け橋になります。</p>
+<p>目標金額は50万円。皆さまのご支援が、子どもたちの「わからないを楽しむ力」になります。どうか応援をお願いいたします。</p>
+<div class="pv-img"><span>画像挿入：団体写真（ともプロ2026団体写真.jpg）<br>（横長・2MB以上の実写真が入ります）</span></div>
+<h3>教えるのではなく、一緒に遊び、語り合う。4つの届け方</h3>
+<p>ご支援をもとに私たちが実施するのは、「遊び」と「対話」を共通の手法とする4つの活動です。実施期間は2026年度から2027年度末（2028年3月31日）までの約2年間。どの活動にも共通するこだわりが一つあります。博士学生が一方的に「教える」のではなく、参加者と博士学生が一緒に考えること。知識を渡すのではなく、「わからないことに向き合い、考え続ける力」を共に育むことです。</p>
+<h4>1. 高校への出前授業——「なんのために勉強するの？」に、少し年上の先輩として向き合う</h4>
+<p>東北地方の高校5校を訪問します。有名教授の講演ではありません。数年前まで同じ教室に座っていた博士学生が、自分の進路選択や失敗、いま取り組んでいる研究をありのままに語ります。そのうえで、教科の学びが研究や社会課題にどうつながっているかを発見するグループワークと、進路について自由に語り合う対話の時間を組み合わせます。「受験のための勉強」になりがちな高校の学びを、「自分の未来につながる学び」へと接続し直す授業です。「物理は何の役に立つの？」「文系でも研究者になれるの？」——そんな問いに、パンフレットの言葉ではなく自分の経験で答えられるのが、私たちの強みです。工学・理学・文学まで多様な専攻の博士学生が在籍するチームの特性を活かし、訪問校の生徒の興味に合わせて講師チームを編成します。</p>
+<div class="pv-img"><span>画像挿入：高校・サイエンスカフェ等で博士学生が生徒と話している様子<br>（横長・2MB以上の実写真が入ります）</span></div>
+<h4>2. 放射線を学ぶボードゲーム——遊びきった後の「実は……」で、思考を動かす</h4>
+<p>放射線を身近なものに喩えて、遊びながらその性質を体感できるボードゲームを開発しています。現在開発中なのは「はなってバリア」「ダッシュ！ごほうびそうだつせん」「おならおじさん（仮題）」の3種類。すでに学都「仙台・宮城」サイエンス・デイと、河北新報社主催「楽しい理科のはなし2026」に出展し、小学生を中心に親子で楽しんでいただきました。こだわりは、ゲームが終わった後にあります。「実は、このゲームのテーマは放射線でした」——そう種明かしをするのです。震災と原発事故を経験した東北において、放射線は「怖い」の一言で思考が止まりやすいテーマ。だからこそ知識を押し付けるのではなく、まず夢中で遊んでもらい、楽しかった体験の後に本当のテーマと出会ってもらいます。放射線を専門とする博士学生が監修し、「正しく恐れ、根拠に基づいて判断する」入り口をつくります。ご支援をもとにさらに改良と量産を進め、出前授業や学校への導入、一般販売まで展開します。</p>
+<div class="pv-img"><span>画像挿入：出展イベントでのボードゲームの様子（親子がボードを囲む様子）<br>（横長・2MB以上の実写真が入ります）</span></div>
+<h4>3. 探究の失敗を疑似体験する脱出ゲーム——失敗から抜け出す過程を、謎解きにする</h4>
+<p>高校で必修化された探究学習（※生徒が自ら問いを立て、調べ、まとめる授業）には、「結論ありきでデータを集めてしまう」「都合のよいデータだけを解釈してしまう」といった失敗がつきものです。しかし成果へのプレッシャーがある学校現場では、失敗そのものを扱うことは容易ではありません。この教材は、そうした失敗をあえて疑似体験し、そこから抜け出す過程を謎解き（脱出ゲーム）として楽しむものです。「失敗してもいい」と頭で知っていることと、失敗から抜け出す面白さを体験することは、まったく別のことです。研究の最前線で毎日試行錯誤している——つまり毎日失敗している——博士学生だからこそ、リアルな失敗を教材に落とし込めます。開発後は学校現場での実証まで行います。</p>
+<h4>4. ゲストハウスの食卓を囲むサイエンスカフェ——旅人と、地元の人と、同じテーブルで</h4>
+<p>仙台市内のゲストハウスなどを拠点に、対話型サイエンスカフェを年10回以上開催します。スライドを使った講演会ではなく、同じ食卓を囲み、飲み物を片手に博士学生と市民が対等に語り合う形式です。防災・震災など東北ならではのテーマを、地元の方と全国・世界からの旅人が一緒に考えます。2026年6月にはゲストハウス梅鉢で第1回を開催し、旅人・地元住民のべ14名にご参加いただきました。旅の一夜の偶然の出会いが、そのまま科学との出会いになる——ゲストハウスという場だからこそ生まれる化学反応です。開催ノウハウはマニュアルにまとめてWebで無償公開し、全国の学生が同じ活動を始められる土台にします。</p>
+<div class="pv-img"><span>画像挿入：ゲストハウス梅鉢での第1回サイエンスカフェ（食卓を囲む様子）<br>（横長・2MB以上の実写真が入ります）</span></div>
+<h4>すべての活動で「効果」を測り、社会に還元します</h4>
+<p>4つの活動すべてで、質問紙調査（※参加前後のアンケートで理解や意識の変化を測る調査）による教育効果の測定を行います。成果は学会発表・論文として公表するとともに、参加校・参加者には平易な報告書として、WebサイトやSNS、一般向け記事としても発信します。「実施しました」で終わらせず、誰もが検証・再現できるモデルとして残すこと——それが、博士学生である私たちの流儀です。ご支援くださった皆さまにも、活動報告を通じて「あなたの支援がこう活きた」を数字と写真でお届けします。</p>
+<h4>ご支援の使いみち（目標金額：50万円）</h4>
+<table class="pv-table"><tr><th>使途</th><th>金額</th></tr><tr><td>出前授業・教材実証の訪問旅費（東北地方の高校等）</td><td>22万円</td></tr><tr><td>ゲーム教材の制作費（試作・デザイン・量産初期費）</td><td>11万円</td></tr><tr><td>学会発表・成果発信の旅費</td><td>6万円</td></tr><tr><td>サイエンスカフェの会場費</td><td>5万円</td></tr><tr><td>ワークシート・質問紙・マニュアル等の印刷費</td><td>2.5万円</td></tr><tr><td>広報・Web運営費、効果測定費</td><td>3.5万円</td></tr></table>
+<p>あなたのご支援でできること（目安）：</p>
+<ul><li><strong>3,000円</strong> … 出前授業1回分のワークシート・質問紙の印刷</li><li><strong>5,000円</strong> … サイエンスカフェ1回分の会場費</li><li><strong>44,000円</strong> … 高校1校への出前授業の訪問旅費</li></ul>
+<p>一つひとつのご支援が、そのまま子どもたちとの一回の出会いになります。</p>
+<h3>500人の子どもと市民に、考え続ける力を。成果は論文で還元</h3>
+<p>直接の目標は、「立場や世代を問わず、科学的に考える力を持つ人を増やすこと」です。具体的には、出前授業・教材導入校あわせて8校以上、体験者累計500名以上。授業の前後に質問紙調査を行い、科学的理解の正答率20%以上の向上を成功指標とします。ボードゲームと脱出ゲームの2教材を完成させて学校・企業等へ10件導入し、サイエンスカフェは年10回以上、提携施設5箇所以上を目指します。そして各活動の効果を分析し、学会発表・論文化まで行います。</p>
+<p>この活動の意義は、参加した500人だけにとどまりません。第一に、教材と開催マニュアルを公開することで、教員個人の経験に頼らない科学教育・探究学習の選択肢が生まれ、先生方の負担軽減と教育格差の縮小につながります。第二に、震災を経験した東北で生まれた防災・放射線の学びが、ゲストハウスに集う全国・世界の旅人を通じて地域を越えて広がります。第三に、博士学生の等身大の姿が子どもや市民に見えることで、「博士＝縁遠い存在」というイメージが変わり、研究者を身近なロールモデルとして育つ次世代が増えていきます。10年後の社会を支える人の裾野を、東北から広げます。</p>
+<h3>専攻も学年も異なる33名。博士学生中心の分野横断チーム</h3>
+<p>サイエンスイベント同好会HagiiZは、「社会課題と学びをつなぐ」を理念に活動する東北大学の学生団体です。原子力・放射線、土木・防災、地球物理、ロボティクス、教育評価（文系）まで、専攻も学年も異なる33名——博士学生を中心に学部生も加わったチームで、それぞれの研究の専門性と、分野を横断して「相手に合わせて伝え方を変える」力を持ち寄っています。</p>
+<p>これまでの主な活動は、高校生向けInstagram発信「社会課題×学校の学び」（投稿200件以上・フォロワー1,000人以上）、学内での「博士と語るサイエンスカフェ」計8回、学都「仙台・宮城」サイエンス・デイや河北新報社主催「楽しい理科のはなし2026」への出展（防災展示・放射線ボードゲーム）などです。防災イベント来場者の意識調査を論文として公表するなど、活動の効果検証まで行うのが私たちの特徴です。メンバーには科学技術コミュニケーションの専門教育（北海道大学CoSTEP）の修了者が2名在籍しています。</p>
+<p>代表の宮岸太一（工学研究科 博士後期課程2年）を中心に、次年度以降も継続して活動する体制を整えています。顔の見える等身大の研究者として、責任を持ってこのプロジェクトをやり遂げます。</p>
+<div class="pv-img"><span>画像挿入（縦長）：プロジェクトオーナー（代表・宮岸）の写真<br>（横長・2MB以上の実写真が入ります）</span></div>
+<h3>教育・地域・研究、それぞれの現場から届いた応援の声</h3><p class="pv-note">※ 掲載前に各メッセージのご本人の執筆・承諾が必要です（現在はたたき台）。</p><h4>1. ゲストハウス梅鉢 オーナー</h4>
+<p>HagiiZの皆さんとの第1回サイエンスカフェでは、旅人も地元の常連さんも、気づけば身を乗り出して話し込んでいました。研究の話がこんなに「その場のみんなの話」になるのかと驚きました。ゲストハウスは人が混ざり合う場所。ここに科学が加わる面白さを、彼らは体現してくれています。次の開催を楽しみにしていますし、この輪が広がることを心から応援します。</p>
+<h4>2. 出前授業・カフェ登壇先の高校教員</h4>
+<p>生徒にとって、教授の講演は「すごい人の話」で終わりがちです。しかし年齢の近い博士学生が、自分の失敗や迷いまで含めて語ってくれると、生徒は「学ぶことと自分の将来」を自分ごととして考え始めます。探究学習の「失敗」を正面から扱う教材づくりは、現場が本当に必要としているものです。学校と研究者をつなぐこの挑戦に期待しています。</p>
+<h4>3. 指導教員・東北大学の教員</h4>
+<p>博士課程の学びの本質は、専門知識ではなく「わからないことに向き合い続ける姿勢」にあります。彼らはそれを研究室の中だけで終わらせず、社会と共有しようとしている。しかも効果測定と論文化まで設計している点が、いかにも研究者らしい。博士学生が社会と対話する経験は、本人たちの研究をも豊かにします。教員として、この挑戦を頼もしく見守っています。</p>
+<h4>4. サイエンスカフェ参加者</h4>
+<p>旅先の仙台で、たまたま泊まったゲストハウスのイベントに参加しました。「防災の話」と聞いて構えていたのですが、同じテーブルでご飯を食べながら話すうちに、気づけば自分の住む町の避難経路の話をしていました。研究者ってこんなに普通の、面白いお兄さんお姉さんなんだ、というのが正直な発見です。全国に広がってほしい活動です。</p>
+<h4>5. 防災教育・調査研究の連携先</h4>
+<p>科学イベントは「楽しかった」で終わってしまうことが少なくありません。HagiiZの強みは、来場者調査に基づいて効果をきちんと検証し、論文として公表するところまでやり切る点です。学生の熱意と研究者の厳密さを併せ持つチームだからこそ、遊びと対話による科学教育を「再現可能なモデル」に育てられると期待しています。</p>
+    </div></div>
+  </div>
+  <div class="c-project-body__sub">
+    <div class="c-project-owner">
+      <p class="c-project-owner__thumbnail pv-owner"><span>オーナー写真<br>（縦長）</span></p>
+      <p class="c-project-owner__title">プロジェクトオーナー</p>
+      <p class="c-project-owner__contents">サイエンスイベント同好会HagiiZ<br>代表<br>宮岸太一</p>
+    </div>
+  </div>
+</div>
+</div>
+<div class="an-wrap" data-an-body="b" data-baseline="abe8d373">
+<h1 class="c-title01">博士学生の私が、遊びと対話で科学と社会の架け橋になる</h1>
+<div class="c-project-header">
+  <div class="c-project-header__img pv-hero"><span>ヘッダー画像（横長・2MB以上）<br>例：団体写真／イベントの様子</span></div>
+  <div class="c-project-header__contents">
+    <div class="c-project-header__contents-inner">
+      <dl class="c-project-header__amount"><dt>現在の寄附総額</dt><dd><strong>0</strong> 円</dd></dl>
+      <div class="c-project-header__bar"><p class="c-project-header__bar_num">0%</p><progress value="0" max="100"></progress></div>
+      <p class="c-project-header__goal">目標金額 500,000円</p>
+      <p class="c-project-header__title">ご支援いただいた皆様</p>
+      <ul class="c-project-header__info">
+        <li><span class="c-project-header__info-title">（個人）</span><span class="c-project-header__info-text"><strong>0</strong> 名</span></li>
+        <li><span class="c-project-header__info-title">（法人・団体）</span><span class="c-project-header__info-text"><strong>0</strong> 社・団体</span></li>
+      </ul>
+    </div>
+    <div class="c-project-header__sns pv-sns"><span>シェア</span><span>ポスト</span><span>LINE</span></div>
+  </div>
+</div>
+<div class="c-project-body">
+  <div class="c-project-body__main">
+    <nav class="c-tabs"><ul>
+<li class="is-active" data-tab-index="1">プロジェクト概要</li>
+<li data-tab-index="2"><span data-badge-post="0">新着情報</span></li>
+<li data-tab-index="3"><span data-badge-message="0">メッセージ</span></li>
+</ul></nav>
+    <div class="c-tab-body is-active"><div class="c-editor">
+<h2 class="u-mt-0">博士学生の私が、遊びと対話で科学と社会の架け橋になる</h2>
+<p>「博士って、何をしている人なの？」——研究室の一歩外で自己紹介をするたび、何度もそう聞かれてきました。私は東北大学で原子力材料を研究する博士学生、宮岸太一です。</p>
+<p>答えるたびに実感します。研究者と社会の間には、思っている以上の距離がある。だったら、その距離を自分の足で縮めよう——仲間33名の「サイエンスイベント同好会HagiiZ」で、このプロジェクトに挑みます。高校への出前授業、放射線を学ぶボードゲーム、探究の失敗を体験する脱出ゲーム、ゲストハウスのサイエンスカフェ。4つの「遊びと対話」で、東北の子どもから大人まで、科学との架け橋になります。目標金額は50万円です。どうか力を貸してください。</p>
+<div class="pv-img"><span>画像挿入（縦長）：プロジェクトオーナー（宮岸）の写真<br>（横長・2MB以上の実写真が入ります）</span></div>
+<h3>原子力材料の博士学生が見た、科学と社会の距離</h3>
+<p>私は、東北大学大学院で原子力材料を研究する博士後期課程の学生です。放射線が材料に当たったとき、その内部で何が起きているのか——目に見えない世界の「わからない」に、毎日向き合っています。実験は思い通りにいかないことがほとんどです。それでも、予想外の結果の中にこそ発見の種がある。研究の面白さは、正しい答えを出すことではなく、わからないことに向き合い、考え続けることにある。それが、博士課程で私がつかんだいちばんの実感です。</p>
+<p>一方で、研究室の一歩外に出ると、いつも同じ質問に出会います。「博士って、何をしている人なの？」。悪気のない、素朴な質問です。でも答えるたびに気づかされました。博士学生が日々何に取り組み、どんな力を持っているのか、社会にはほとんど知られていないのだと。</p>
+<p>そして、私の研究は原子力に関わる分野です。だからこそ、震災と原発事故を経験した東北で、放射線という言葉を聞いた瞬間に「怖い」で思考が止まってしまう人が多いことを、痛いほど知っています。数値やデータの話をする前に、まず心の扉が閉じてしまう。HagiiZの仲間には、ゲストハウスのスタッフとして世界中の旅人と語り合ってきた者や、原発事故の被災地域を案内するツアーガイドを務めた者がいて、彼らが現場で見てきた光景も同じでした。それは決してその人たちのせいではなく、科学の側が「怖くない出会い方」を用意してこなかったからだ——原子力材料を研究する自分に何ができるのか、ずっと考えてきました。</p>
+<div class="pv-img"><span>画像挿入：サイエンスカフェ等で市民と語り合う様子<br>（横長・2MB以上の実写真が入ります）</span></div>
+<p>だから私は、北海道大学のCoSTEP（科学技術コミュニケーションの専門教育プログラム）で学びました。そこで知ったのは、かつての科学の伝え方は「知らない人に正しい知識を与えればよい」という一方通行で、それでは人の気持ちも行動も変わらないこと。いま世界では、対話を通じて市民と共に考える伝え方への転換が進んでいることです。講演で「教える」のではなく、同じ目線で「一緒に考える」。それなら、偉い教授よりも、年齢も立場も社会に近い博士学生のほうが向いているはずです。子どもにとっては少し年上のお兄さん・お姉さん。市民にとっては等身大の研究者。埼玉県立春日部高校でのサイエンスカフェや、福島県土湯温泉での市民向けの場に登壇するたび、その手応えは確信に変わっていきました。</p>
+<p>同じ思いの仲間は、身近にいました。SNSで高校生に「社会課題と学校の学び」のつながりを発信してきたメンバー。防災イベントで来場者の意識調査を行い、論文にまとめたメンバー。2024年の秋、私は博士学生の仲間とともに団体「HagiiZ」を立ち上げました。それを母体に、学部生も加わった「サイエンスイベント同好会HagiiZ」は、専攻も学年も違う33名に育ちました。今年6月には、メンバーが長年スタッフを務める仙台のゲストハウス梅鉢で、市民向けサイエンスカフェの第1回を開き、旅人と地元の方、のべ14名が同じ食卓で語り合いました。</p>
+<p>そして今年の2月から3月、私は米国のマサチューセッツ工科大学（MIT）に研究留学しました。そこでは博士号を持つ人材が、大学の中だけでなく企業でも行政でも、社会の当たり前として評価され、活躍していました。博士であることが「変わった経歴」ではなく「頼られる理由」になっている。日本との差に悔しさを覚えると同時に、確信したのです。「博士＝縁遠い存在」という日本のイメージは、変えられる。誰かが変えてくれるのを待つのではなく、いま博士課程にいる自分たちが動けばいい。</p>
+<p>梅鉢の食卓で見た夜の手応えと、MITで見た景色。この二つが、このプロジェクトの原点です。一人で届く範囲には限りがあります。でも33名の仲間と、そしてこのページを読んでくださっているあなたと一緒なら、もっと遠くまで届くはずです。</p>
+<div class="pv-img"><span>画像挿入：第1回サイエンスカフェまたは学内サイエンスカフェの様子<br>（横長・2MB以上の実写真が入ります）</span></div>
+<h3>遊びと対話で届ける4つの活動と、ご支援の使いみち</h3>
+<p>ご支援をもとに、2026年度から2027年度末（2028年3月31日）までの約2年間で、4つの活動を実施します。共通するのは、博士学生が一方的に「教える」のではなく、参加者と「一緒に考える」ことです。</p>
+<p><strong>1. 高校への出前授業</strong>——東北地方の高校5校を訪問します。数年前まで同じ教室にいた博士学生が、進路選択や失敗、いまの研究をありのままに語り、教科の学びと社会のつながりを発見するグループワークと自由な対話を組み合わせます。「受験のための勉強」を「自分の未来につながる学び」へ接続し直す授業です。</p>
+<p><strong>2. 放射線を学ぶボードゲーム</strong>——放射線を身近なものに喩えたボードゲーム3種類（「はなってバリア」「ダッシュ！ごほうびそうだつせん」「おならおじさん（仮題）」）を開発中です。すでにサイエンス・デイと河北新報社主催「楽しい理科のはなし2026」に出展し、小学生を中心に親子で楽しんでいただきました。仕掛けは、遊びきった後の一言。「実は、テーマは放射線でした」——知識を押し付けず、楽しんだ後に本当のテーマと出会ってもらう設計です。放射線を専門とする博士学生が監修し、改良を重ねて学校導入と一般販売まで展開します。</p>
+<div class="pv-img"><span>画像挿入：出展イベントでのボードゲームの様子（親子がボードを囲む様子）<br>（横長・2MB以上の実写真が入ります）</span></div>
+<p><strong>3. 探究の失敗を疑似体験する脱出ゲーム</strong>——高校の探究学習（※生徒が自ら問いを立て、調べ、まとめる授業）でつまずきがちな「結論ありきのデータ集め」などの失敗を、あえて疑似体験して抜け出す謎解き教材をつくります。毎日失敗している博士学生だからこそ、リアルな失敗を教材にできます。開発後は学校現場で実証します。</p>
+<p><strong>4. ゲストハウスの食卓を囲むサイエンスカフェ</strong>——仙台市内のゲストハウス等で、対話型サイエンスカフェを年10回以上開催します。防災・震災など東北ならではのテーマを、地元の方と全国・世界からの旅人が一緒に考えます。開催ノウハウはマニュアル化してWebで無償公開します。</p>
+<p>すべての活動で、質問紙調査（※参加前後のアンケートで理解や意識の変化を測る調査）により教育効果を測定し、学会発表・論文化と、参加者への平易な報告書の両方で還元します。</p>
+<p><strong>ご支援の使いみち（目標金額：50万円）</strong>：出前授業・教材実証の旅費22万円／ゲーム教材の制作費11万円／学会発表・成果発信の旅費6万円／サイエンスカフェ会場費5万円／印刷・効果測定・広報費6万円。目安として、5,000円でサイエンスカフェ1回分の会場費、44,000円で高校1校への出前授業の旅費になります。一つひとつのご支援が、子どもたちとの一回の出会いになります。</p>
+<h3>体験者500名・教材2つ・論文化。単発で終わらせない</h3>
+<p>直接の目標は、出前授業・教材導入校あわせて8校以上、体験者累計500名以上です。授業の前後に質問紙調査を行い、科学的理解の正答率20%以上の向上を成功指標とします。ボードゲームと脱出ゲームの2教材を完成させて学校・企業等へ10件導入し、サイエンスカフェは年10回以上、提携施設5箇所以上。そして各活動の効果を分析し、学会発表・論文化まで行います。「実施しました」で終わらせず、誰もが検証・再現できるモデルとして残すためです。</p>
+<p>効果は参加者だけにとどまりません。教材と開催マニュアルの公開は、先生方の経験に頼らない科学教育の選択肢となり、教員の負担軽減と教育格差の縮小につながります。震災を経験した東北で生まれた防災・放射線の学びは、ゲストハウスに集う旅人を通じて全国へ、世界へ広がります。そして、博士学生の等身大の姿が子どもや市民に見えることで、「博士＝縁遠い存在」というイメージが変わり、研究者を身近なロールモデルとして育つ次世代が増えていく。10年後の社会を支える人の裾野を、東北から広げます。</p>
+<h3>失敗を恐れず探究できる文化を、東北から</h3>
+<p>クラウドファンディングという形を選んだのは、資金のためだけではありません。ご支援くださる一人ひとりと一緒に、この文化をつくりたいからです。</p>
+<p>私たちが目指すのは、二つの文化です。一つは、子どもたちが失敗を恐れず、わからないことを楽しみながら探究できる文化。もう一つは、博士学生が「縁遠い存在」ではなく、社会に応援される存在になる文化。この二つは、実は同じことの裏表だと思っています。失敗を恐れずに問い続ける大人の背中が身近にあれば、子どもは安心して探究できるからです。</p>
+<p>10年後、あのときボードゲームで笑い転げていた子が、脱出ゲームで悔しがっていた生徒が、ゲストハウスの食卓にいた誰かが、今度は自分の「わからない」を語る側に立っていたら。それがこのプロジェクトの本当のゴールです。</p>
+<p>ご支援はもちろん、このページを誰かに紹介していただくことも、大きな力になります。活動の様子は随時このページで報告し、「あなたの支援がこう活きた」を数字と写真でお届けします。東北の子どもと大人に科学の楽しさを届ける挑戦、どうか一緒に進んでください。よろしくお願いいたします。</p>
+<div class="pv-img"><span>画像挿入：団体写真（ともプロ2026団体写真.jpg）<br>（横長・2MB以上の実写真が入ります）</span></div>
+    </div></div>
+  </div>
+  <div class="c-project-body__sub">
+    <div class="c-project-owner">
+      <p class="c-project-owner__thumbnail pv-owner"><span>オーナー写真<br>（縦長）</span></p>
+      <p class="c-project-owner__title">プロジェクトオーナー</p>
+      <p class="c-project-owner__contents">サイエンスイベント同好会HagiiZ<br>代表<br>宮岸太一</p>
+    </div>
+  </div>
+</div>
+</div>
+<div class="an-wrap" data-an-body="c" data-baseline="a0003823">
+<h1 class="c-title01">「博士って何する人？」遊びと対話で答える4つの挑戦</h1>
+<div class="c-project-header">
+  <div class="c-project-header__img pv-hero"><span>ヘッダー画像（横長・2MB以上）<br>例：団体写真／イベントの様子</span></div>
+  <div class="c-project-header__contents">
+    <div class="c-project-header__contents-inner">
+      <dl class="c-project-header__amount"><dt>現在の寄附総額</dt><dd><strong>0</strong> 円</dd></dl>
+      <div class="c-project-header__bar"><p class="c-project-header__bar_num">0%</p><progress value="0" max="100"></progress></div>
+      <p class="c-project-header__goal">目標金額 500,000円</p>
+      <p class="c-project-header__title">ご支援いただいた皆様</p>
+      <ul class="c-project-header__info">
+        <li><span class="c-project-header__info-title">（個人）</span><span class="c-project-header__info-text"><strong>0</strong> 名</span></li>
+        <li><span class="c-project-header__info-title">（法人・団体）</span><span class="c-project-header__info-text"><strong>0</strong> 社・団体</span></li>
+      </ul>
+    </div>
+    <div class="c-project-header__sns pv-sns"><span>シェア</span><span>ポスト</span><span>LINE</span></div>
+  </div>
+</div>
+<div class="c-project-body">
+  <div class="c-project-body__main">
+    <nav class="c-tabs"><ul>
+<li class="is-active" data-tab-index="1">プロジェクト概要</li>
+<li data-tab-index="2"><span data-badge-post="0">新着情報</span></li>
+<li data-tab-index="3"><span data-badge-message="0">メッセージ</span></li>
+</ul></nav>
+    <div class="c-tab-body is-active"><div class="c-editor">
+<h2 class="u-mt-0">「博士って何する人？」遊びと対話で答える4つの挑戦</h2>
+<p>6月の仙台。ゲストハウスの食卓に、旅の途中の宿泊客、地元の常連さん、そして博士学生が並びました。テーマは防災。誰も教壇に立たないのに、話は尽きませんでした——これが、私たちのサイエンスカフェです。</p>
+<p>私たちは、東北大学の博士学生を中心とする33名の学生団体「サイエンスイベント同好会HagiiZ」。①高校への出前授業、②放射線を楽しく学ぶボードゲーム、③探究の失敗を疑似体験する脱出ゲーム、④ゲストハウスのサイエンスカフェ——4つの「遊びと対話」で、東北の子どもから大人まで、科学の楽しさと「考え続ける力」を届けます。</p>
+<p>目標金額は50万円。あなたのご支援が、誰かと科学の最初の出会いをつくります。</p>
+<div class="pv-img"><span>画像挿入：ゲストハウス梅鉢での第1回サイエンスカフェ（食卓を囲む様子）<br>（横長・2MB以上の実写真が入ります）</span></div>
+<h3>出会い方をデザインする。4つの「遊びと対話」</h3>
+<p>「科学はこわい」「勉強はつまらない」「研究者は遠い人」。私たちは、それを子どもや市民のせいだとは思いません。ただ、科学との出会い方が悪かっただけです。だから私たちは、出会い方そのものをつくり直します。</p>
+<p>道具は「遊び」と「対話」です。正しい知識を一方的に配っても、人の気持ちと行動は変わらない——これは科学コミュニケーションの世界で広く共有されてきた反省です。夢中で遊んでいるとき、同じ食卓で語り合っているとき、人は初めて自分の頭で考え始めます。そして、その隣に座るのは有名な教授ではなく、年齢も立場も社会に近い博士学生。子どもにとっては少し年上のお兄さん・お姉さん、市民にとっては等身大の研究者です。2026年度から2027年度末までの約2年間、ご支援をもとに実施する4つの活動を紹介します。</p>
+<h4>「なんのために勉強するんだろう」——高校への出前授業</h4>
+<p>問題集を解きながら、ふとそう思ったことはないでしょうか。東北地方の高校5校を訪ね、数年前まで同じ教室にいた博士学生が、自分の進路選択と失敗、いま夢中になっている研究をありのままに語ります。教科の学びが研究や社会課題にどうつながっているかを発見するグループワークと、進路を自由に語り合う対話の時間。有名教授の講演ではなく、少し年上の先輩との会話だからこそ、「勉強と自分の未来」が初めてつながる瞬間が生まれます。「物理は何の役に立つの？」「文系でも研究者になれるの？」——そんな問いに、パンフレットの言葉ではなく自分の経験で答えます。専攻の異なる博士学生33名のチームだから、生徒の興味に合わせて講師を選べます。</p>
+<div class="pv-img"><span>画像挿入：博士学生が高校生・参加者と話している様子<br>（横長・2MB以上の実写真が入ります）</span></div>
+<h4>「実は、放射線のゲームでした」——遊んだ後に種明かしするボードゲーム</h4>
+<p>「はなってバリア」「ダッシュ！ごほうびそうだつせん」「おならおじさん（仮題）」。放射線を身近なものに喩えた3種類のボードゲームを開発し、学都「仙台・宮城」サイエンス・デイと、河北新報社主催「楽しい理科のはなし2026」に出展しました。ボードを囲んで笑い転げるのは、小学生とその親御さんたち。そしてゲームが終わった後、私たちはこう切り出します。「実は、このゲームのテーマは放射線でした」。震災と原発事故を経験した東北で、放射線は「こわい」の一言で思考が止まりやすいテーマです。だから知識を押し付けるのではなく、まず夢中で遊んでもらい、楽しかった体験の後に本当のテーマと出会ってもらう。放射線を専門とする博士学生が監修し、「正しく恐れ、根拠で判断する」入り口をつくります。ご支援をもとに改良と量産を進め、学校への導入、そして一般販売まで届けます。</p>
+<div class="pv-img"><span>画像挿入：出展イベントでのボードゲームの様子（親子がボードを囲む様子）<br>（横長・2MB以上の実写真が入ります）</span></div>
+<h4>「発表は来週。でも、結論に合うデータしかない」——探究の失敗を体験する脱出ゲーム</h4>
+<p>高校で必修化された探究学習（※生徒が自ら問いを立て、調べ、まとめる授業）では、「結論ありきでデータを集めてしまう」「都合のよいデータだけを解釈してしまう」といった失敗が起こりがちです。でも、成績のつく授業で失敗を正面から扱うのは簡単ではありません。そこで、失敗をあえて疑似体験し、そこから抜け出す過程そのものを謎解きとして楽しむ脱出ゲームをつくります。「失敗してもいい」と頭で知ることと、失敗から抜け出す面白さを体験することは、まったく別のことです。毎日試行錯誤している——つまり毎日失敗している——博士学生だからこそつくれる教材を、学校現場での実証まで行います。</p>
+<h4>「研究者と話したの、初めて」——ゲストハウスの食卓を囲むサイエンスカフェ</h4>
+<p>冒頭のシーンには続きがあります。今年6月、ゲストハウス梅鉢で開いた第1回サイエンスカフェには、旅人と地元の方あわせてのべ14名が集まりました。スライドも教壇もなし。同じ食卓で、飲み物を片手に、防災や震災の話を自分の町のこととして語り合う。旅の一夜の偶然が、科学との出会いになる場です。この形式で年10回以上開催し、防災・震災という東北ならではのテーマを、地元の方と全国・世界からの旅人が一緒に考える場を積み重ねます。開催ノウハウはマニュアルにまとめてWebで無償公開します。全国のどの街の学生でも、同じ場を開けるように。</p>
+<div class="pv-img"><span>画像挿入：サイエンスカフェで語り合う参加者の表情がわかる写真<br>（横長・2MB以上の実写真が入ります）</span></div>
+<h4>体験を「思い出」で終わらせないために</h4>
+<p>4つの活動すべてで、質問紙調査（※参加前後のアンケートで理解や意識の変化を測る調査）による効果測定を行い、学会発表・論文として公表します。同時に、参加した学校や皆さんには平易な報告書として、ご支援くださった皆さまには活動報告として、「あなたの支援がこう活きた」を数字と写真でお届けします。</p>
+<h4>ご支援の使いみち（目標金額：50万円）</h4>
+<table class="pv-table"><tr><th>使途</th><th>金額</th></tr><tr><td>出前授業・教材実証の訪問旅費（東北地方の高校等）</td><td>22万円</td></tr><tr><td>ゲーム教材の制作費（試作・デザイン・量産初期費）</td><td>11万円</td></tr><tr><td>学会発表・成果発信の旅費</td><td>6万円</td></tr><tr><td>サイエンスカフェの会場費</td><td>5万円</td></tr><tr><td>印刷費・効果測定費・広報費</td><td>6万円</td></tr></table>
+<p>あなたのご支援でできること（目安）：<strong>3,000円</strong>でワークシート1回分の印刷、<strong>5,000円</strong>でサイエンスカフェ1回分の会場費、<strong>44,000円</strong>で高校1校への出前授業。ご支援は、そのまま誰かと科学の一回の出会いになります。</p>
+<h3>「わかった！」を500人へ。学びは東北から全国に広がる</h3>
+<p>私たちが数えたいのは、「わかった！」「おもしろかった！」の数です。目標は、出前授業・教材導入校あわせて8校以上、体験者累計500名以上。前後の質問紙調査で科学的理解の正答率20%以上の向上を確かめます。ボードゲームと脱出ゲームの2教材を完成させて学校・企業等へ10件導入し、サイエンスカフェは年10回以上・提携施設5箇所以上。効果は分析して学会発表・論文化まで行い、再現できるモデルとして残します。</p>
+<p>そして、この500人は始まりにすぎません。教材と開催マニュアルを公開すれば、私たちが行けない教室でも、先生方が同じ授業を開けます。ゲストハウスで防災を語り合った旅人は、その学びを自分の町へ持ち帰ります。何より、博士学生の等身大の姿に触れた子どもたちにとって、研究者は「テレビの中の人」ではなく「あのとき一緒に遊んだお兄さん・お姉さん」になります。科学がこわくない、勉強がつまらなくない、研究者が遠くない——そんな当たり前を、東北から全国へ広げていきます。</p>
+<h3>放射線から防災、教育まで。分野横断の33名が伴走します</h3>
+<p>サイエンスイベント同好会HagiiZは、「社会課題と学びをつなぐ」を理念に活動する東北大学の学生団体です。放射線・原子力を研究する博士学生、土木・防災の博士学生、地球の内部を調べる博士学生、ロボットの博士学生、そして教育の効果を研究する文系の博士学生——分野の垣根を越えて（分野横断で）集まった33名に、高校生に近い目線を持つ学部生も加わっています。相手が小学生でも、高校生でも、旅人でも、その人に合う「伝え手」がチームの中にいる。それが私たちの一番の強みです。</p>
+<p>これまでに、高校生向けのInstagram発信「社会課題×学校の学び」（投稿200件以上・フォロワー1,000人以上）、学内サイエンスカフェ8回、学都「仙台・宮城」サイエンス・デイや河北新報社主催「楽しい理科のはなし2026」への出展などを重ねてきました。防災イベントでの来場者調査を論文として公表するなど、活動を「やりっぱなし」にしない効果検証も私たちの持ち味です。科学技術コミュニケーションの専門教育（北海道大学CoSTEP）の修了者も2名在籍しています。</p>
+<p>代表の宮岸太一（工学研究科 博士後期課程2年）を中心に、次年度以降も続く体制で、責任を持ってやり遂げます。</p>
+<div class="pv-img"><span>画像挿入（縦長）：プロジェクトオーナー（代表・宮岸）の写真<br>（横長・2MB以上の実写真が入ります）</span></div>
+<div class="pv-img"><span>画像挿入：団体写真（ともプロ2026団体写真.jpg）<br>（横長・2MB以上の実写真が入ります）</span></div>
+<h3>教育・地域・研究、それぞれの現場から届いた応援の声</h3><p class="pv-note">※ 掲載前に各メッセージのご本人の執筆・承諾が必要です（現在はたたき台）。</p><h4>1. ゲストハウス梅鉢 オーナー</h4>
+<p>HagiiZの皆さんとの第1回サイエンスカフェでは、旅人も地元の常連さんも、気づけば身を乗り出して話し込んでいました。研究の話がこんなに「その場のみんなの話」になるのかと驚きました。ゲストハウスは人が混ざり合う場所。ここに科学が加わる面白さを、彼らは体現してくれています。次の開催を楽しみにしていますし、この輪が広がることを心から応援します。</p>
+<h4>2. 出前授業・カフェ登壇先の高校教員</h4>
+<p>生徒にとって、教授の講演は「すごい人の話」で終わりがちです。しかし年齢の近い博士学生が、自分の失敗や迷いまで含めて語ってくれると、生徒は「学ぶことと自分の将来」を自分ごととして考え始めます。探究学習の「失敗」を正面から扱う教材づくりは、現場が本当に必要としているものです。学校と研究者をつなぐこの挑戦に期待しています。</p>
+<h4>3. 指導教員・東北大学の教員</h4>
+<p>博士課程の学びの本質は、専門知識ではなく「わからないことに向き合い続ける姿勢」にあります。彼らはそれを研究室の中だけで終わらせず、社会と共有しようとしている。しかも効果測定と論文化まで設計している点が、いかにも研究者らしい。博士学生が社会と対話する経験は、本人たちの研究をも豊かにします。教員として、この挑戦を頼もしく見守っています。</p>
+<h4>4. サイエンスカフェ参加者</h4>
+<p>旅先の仙台で、たまたま泊まったゲストハウスのイベントに参加しました。「防災の話」と聞いて構えていたのですが、同じテーブルでご飯を食べながら話すうちに、気づけば自分の住む町の避難経路の話をしていました。研究者ってこんなに普通の、面白いお兄さんお姉さんなんだ、というのが正直な発見です。全国に広がってほしい活動です。</p>
+<h4>5. 防災教育・調査研究の連携先</h4>
+<p>科学イベントは「楽しかった」で終わってしまうことが少なくありません。HagiiZの強みは、来場者調査に基づいて効果をきちんと検証し、論文として公表するところまでやり切る点です。学生の熱意と研究者の厳密さを併せ持つチームだからこそ、遊びと対話による科学教育を「再現可能なモデル」に育てられると期待しています。</p>
+    </div></div>
+  </div>
+  <div class="c-project-body__sub">
+    <div class="c-project-owner">
+      <p class="c-project-owner__thumbnail pv-owner"><span>オーナー写真<br>（縦長）</span></p>
+      <p class="c-project-owner__title">プロジェクトオーナー</p>
+      <p class="c-project-owner__contents">サイエンスイベント同好会HagiiZ<br>代表<br>宮岸太一</p>
+    </div>
+  </div>
+</div>
+</div>
 </main>
-<div class="pv-foot">サイエンスイベント同好会HagiiZ ／ 公式LINE <a href="https://lin.ee/X78sq8H">https://lin.ee/X78sq8H</a> ／ Instagram @hagiiz_kaisetsu<br>
-本ページは東北大学基金「ともプロ！2026」プロジェクトページ（10/1公開予定）の事前プレビューです。</div>
+<div class="pv-foot">本番デザイン再現プレビュー（東北大学基金「ともプロ！」プロジェクトページの体裁を再現したモックです。実サイトではありません）</div>
+<script>
+(function(){
+  var LS = "tomopro_edit_";
+  var editMode = false;
+  var saveTimer = null;
+
+  function cur(){ return document.querySelector(".an-wrap.is-current"); }
+  function lsKey(w){ return LS + w.dataset.anBody; }
+
+  function applyEditable(on){
+    var w = cur();
+    var t = w.querySelector("h1.c-title01");
+    var e = w.querySelector(".c-editor");
+    if (t) t.contentEditable = on ? "true" : "false";
+    if (e) e.contentEditable = on ? "true" : "false";
+    w.classList.toggle("pv-editing", on);
+  }
+
+  function saveNow(){
+    var w = cur();
+    var hero = w.querySelector(".pv-hero");
+    var own = w.querySelector(".pv-owner");
+    var data = {
+      title: w.querySelector("h1.c-title01").innerHTML,
+      body: w.querySelector(".c-editor").innerHTML,
+      hero: (hero && hero.classList.contains("pv-filled")) ? { src: hero.querySelector("img").src, name: hero.getAttribute("data-img-name") || "" } : null,
+      owner: (own && own.classList.contains("pv-filled")) ? { src: own.querySelector("img").src, name: own.getAttribute("data-img-name") || "" } : null,
+      baseline: w.dataset.baseline,
+      at: new Date().toLocaleString("ja-JP")
+    };
+    delete w.dataset.stale;
+    try {
+      localStorage.setItem(lsKey(w), JSON.stringify(data));
+      updateState();
+    } catch (e) {
+      document.getElementById("editState").textContent = "⚠️ 自動保存の容量オーバー：画像を減らすか、テキスト書き出しで退避してください";
+    }
+  }
+
+  function restore(w){
+    var d = localStorage.getItem(lsKey(w));
+    if (!d) return;
+    try { d = JSON.parse(d); } catch (e) { return; }
+    if (d.baseline !== w.dataset.baseline) { w.dataset.stale = "1"; return; }
+    if (d.title) w.querySelector("h1.c-title01").innerHTML = d.title;
+    if (d.body) w.querySelector(".c-editor").innerHTML = d.body;
+    if (d.hero) fillCover(w.querySelector(".pv-hero"), d.hero.src, d.hero.name);
+    if (d.owner) fillCover(w.querySelector(".pv-owner"), d.owner.src, d.owner.name);
+  }
+
+  function updateState(){
+    var el = document.getElementById("editState");
+    if (cur().dataset.stale) {
+      el.textContent = "⚠️ 正本が更新されたため、以前のブラウザ編集は適用していません（最新の正本を表示中。旧編集は「↩️ 編集を破棄」で消去できます）";
+      return;
+    }
+    var d = localStorage.getItem(lsKey(cur()));
+    if (!d) { el.textContent = ""; return; }
+    try { d = JSON.parse(d); } catch (e) { d = {}; }
+    el.textContent = "編集あり・このブラウザに自動保存（" + (d.at || "") + "）";
+  }
+
+  document.querySelectorAll(".an-wrap").forEach(restore);
+  updateState();
+
+  document.querySelectorAll(".pv-topbar button.sw").forEach(function(btn){
+    btn.addEventListener("click", function(){
+      document.querySelectorAll(".pv-topbar button.sw").forEach(function(b){b.classList.remove("is-current");});
+      document.querySelectorAll(".an-wrap").forEach(function(w){
+        w.classList.remove("is-current");
+        w.classList.remove("pv-editing");
+        var t = w.querySelector("h1.c-title01"), e = w.querySelector(".c-editor");
+        if (t) t.contentEditable = "false";
+        if (e) e.contentEditable = "false";
+      });
+      btn.classList.add("is-current");
+      document.querySelector('[data-an-body="'+btn.dataset.an+'"]').classList.add("is-current");
+      if (editMode) applyEditable(true);
+      updateState();
+      window.scrollTo(0,0);
+    });
+  });
+
+  document.getElementById("btnEdit").addEventListener("click", function(){
+    editMode = !editMode;
+    this.classList.toggle("on", editMode);
+    this.textContent = editMode ? "✏️ 編集中（クリックで終了）" : "✏️ 編集モード";
+    applyEditable(editMode);
+  });
+
+  document.addEventListener("input", function(ev){
+    if (!editMode) return;
+    if (!ev.target.closest(".an-wrap.is-current")) return;
+    clearTimeout(saveTimer);
+    saveTimer = setTimeout(saveNow, 400);
+  });
+
+  /* --- 画像挿入 --- */
+  var savedRange = null;
+  document.addEventListener("selectionchange", function(){
+    var s = document.getSelection();
+    if (s.rangeCount && cur() && cur().contains(s.anchorNode)) {
+      savedRange = s.getRangeAt(0).cloneRange();
+    }
+  });
+
+  function pickImage(cb){
+    var inp = document.createElement("input");
+    inp.type = "file";
+    inp.accept = "image/*";
+    inp.onchange = function(){
+      var f = inp.files[0];
+      if (!f) return;
+      var rd = new FileReader();
+      rd.onload = function(){
+        var img = new Image();
+        img.onload = function(){
+          var MAX = 1600;
+          var sc = Math.min(1, MAX / img.width);
+          var cv = document.createElement("canvas");
+          cv.width = Math.round(img.width * sc);
+          cv.height = Math.round(img.height * sc);
+          cv.getContext("2d").drawImage(img, 0, 0, cv.width, cv.height);
+          cb(cv.toDataURL("image/jpeg", 0.87), f.name);
+        };
+        img.src = rd.result;
+      };
+      rd.readAsDataURL(f);
+    };
+    inp.click();
+  }
+
+  function fillImgBox(box, url, name){
+    box.classList.add("pv-img-filled");
+    box.innerHTML = "";
+    var im = document.createElement("img");
+    im.src = url;
+    im.setAttribute("data-name", name);
+    box.appendChild(im);
+    saveNow();
+  }
+
+  function fillCover(box, url, name){
+    if (!box) return;
+    box.classList.add("pv-filled");
+    box.setAttribute("data-img-name", name || "");
+    box.innerHTML = "";
+    var im = document.createElement("img");
+    im.src = url;
+    box.appendChild(im);
+  }
+
+  document.addEventListener("click", function(ev){
+    if (!editMode) return;
+    if (!ev.target.closest(".an-wrap.is-current")) return;
+    var hero = ev.target.closest(".pv-hero");
+    var own = ev.target.closest(".pv-owner");
+    var box = ev.target.closest(".pv-img");
+    if (hero) {
+      ev.preventDefault();
+      pickImage(function(url, name){ fillCover(hero, url, name); saveNow(); });
+      return;
+    }
+    if (own) {
+      ev.preventDefault();
+      pickImage(function(url, name){ fillCover(own, url, name); saveNow(); });
+      return;
+    }
+    if (box) {
+      ev.preventDefault();
+      pickImage(function(url, name){ fillImgBox(box, url, name); });
+    }
+  });
+
+  document.getElementById("btnImg").addEventListener("click", function(){
+    if (!editMode) { alert("先に「✏️ 編集モード」をオンにしてください。このボタンはカーソル位置（または末尾）に画像を挿入します。ヘッダー画像・オーナー写真・本文のプレースホルダー・既存画像は、編集モード中にクリックすると選択／差し替えできます。"); return; }
+    pickImage(function(url, name){
+      var ed = cur().querySelector(".c-editor");
+      var div = document.createElement("div");
+      div.className = "pv-img pv-img-filled";
+      var im = document.createElement("img");
+      im.src = url;
+      im.setAttribute("data-name", name);
+      div.appendChild(im);
+      var blk = null;
+      if (savedRange) {
+        var n = savedRange.startContainer;
+        if (n.nodeType === 3) n = n.parentElement;
+        while (n && n !== ed && n.parentElement !== ed) n = n.parentElement;
+        if (n && n.parentElement === ed) blk = n;
+      }
+      if (blk) blk.after(div); else ed.appendChild(div);
+      div.scrollIntoView({block: "center"});
+      saveNow();
+    });
+  });
+
+  document.getElementById("btnReset").addEventListener("click", function(){
+    var w = cur();
+    if (!localStorage.getItem(lsKey(w))) { alert("この案に保存された編集はありません。"); return; }
+    if (!confirm(w.dataset.anBody.toUpperCase() + "案の編集内容を破棄して元に戻しますか？")) return;
+    localStorage.removeItem(lsKey(w));
+    location.reload();
+  });
+
+  document.getElementById("btnExport").addEventListener("click", function(){
+    var w = cur();
+    var lines = [];
+    lines.push("# プロジェクトタイトル");
+    lines.push(w.querySelector("h1.c-title01").innerText.trim());
+    lines.push("");
+    var xh = w.querySelector(".pv-hero");
+    if (xh && xh.classList.contains("pv-filled")) {
+      lines.push("【ヘッダー画像：挿入済み（" + (xh.getAttribute("data-img-name") || "名称不明") + "）】");
+      lines.push("");
+    }
+    var xo = w.querySelector(".pv-owner");
+    if (xo && xo.classList.contains("pv-filled")) {
+      lines.push("【オーナー写真：挿入済み（" + (xo.getAttribute("data-img-name") || "名称不明") + "）】");
+      lines.push("");
+    }
+    Array.prototype.forEach.call(w.querySelector(".c-editor").children, function(el){
+      var t = (el.innerText || "").trim();
+      if (el.classList && el.classList.contains("pv-img")) {
+        var im = el.querySelector("img");
+        if (im) lines.push("【画像挿入：挿入済み画像（" + (im.getAttribute("data-name") || im.getAttribute("alt") || "名称不明") + "）】");
+        else lines.push("【" + t.split("\n")[0].replace(/（横長.*$/, "") + "】");
+        lines.push("");
+        return;
+      }
+      if (!t && el.tagName !== "TABLE") return;
+      if (el.tagName === "H2") lines.push("## " + t);
+      else if (el.tagName === "H3") lines.push("### " + t);
+      else if (el.tagName === "H4") lines.push("#### " + t);
+      else if (el.tagName === "UL" || el.tagName === "OL") {
+        el.querySelectorAll("li").forEach(function(li){ lines.push("- " + li.innerText.trim()); });
+      }
+      else if (el.tagName === "TABLE") {
+        var first = true;
+        el.querySelectorAll("tr").forEach(function(tr){
+          var cells = Array.prototype.map.call(tr.querySelectorAll("th,td"), function(c){ return c.innerText.trim(); });
+          lines.push("| " + cells.join(" | ") + " |");
+          if (first) { lines.push("|" + cells.map(function(){ return "---"; }).join("|") + "|"); first = false; }
+        });
+      }
+      else lines.push(t);
+      lines.push("");
+    });
+    var blob = new Blob(["﻿" + lines.join("\n")], { type: "text/plain;charset=utf-8" });
+    var a = document.createElement("a");
+    a.href = URL.createObjectURL(blob);
+    var d = new Date();
+    a.download = w.dataset.anBody.toUpperCase() + "案_編集版_" +
+      d.getFullYear() + ("0"+(d.getMonth()+1)).slice(-2) + ("0"+d.getDate()).slice(-2) + ".txt";
+    a.click();
+  });
+})();
+</script>
 </body>
 </html>
