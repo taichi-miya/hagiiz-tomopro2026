@@ -1,0 +1,734 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>HagiiZ メール作成ツール</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@500;700&display=swap" rel="stylesheet">
+<style>:root{--pink:#e24f93;--pink-dark:#c73a7b;--pink-mid:#ef82b1;--pink-light:#f9c9dd;--pink-bg:#fdeef5;--yellow:#ffd166;--ink:#1f3864;--ink-sub:#5a6b80;--line:#06c755;--white:#fff;
+  --shadow:0 14px 36px rgba(226,79,147,.18);}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{background:var(--pink);color:var(--ink);font-family:"Zen Maru Gothic","M PLUS Rounded 1c","Hiragino Maru Gothic ProN","Meiryo",sans-serif;font-weight:500;letter-spacing:.04em;line-height:1.7;overflow-x:hidden}
+.hero{padding:32px 16px 8px;color:var(--white);max-width:880px;margin:0 auto}
+.hero h1{font-size:28px;font-weight:700;margin:0 0 8px}
+.hero .lead{margin:0;font-size:15px}
+main{max-width:880px;margin:0 auto;padding:8px 16px 48px;display:grid;gap:20px}
+.card{background:var(--white);border-radius:32px;padding:24px 20px;box-shadow:var(--shadow);min-width:0}
+.card h2{font-size:20px;font-weight:700;margin:0 0 16px;display:flex;align-items:center;gap:10px}
+.num{display:inline-grid;place-items:center;width:32px;height:32px;border-radius:999px;background:var(--yellow);color:var(--ink);font-size:16px}
+label{display:block;font-size:14px;color:var(--ink-sub);margin:12px 0 4px}
+input,select,textarea{width:100%;font:inherit;color:var(--ink);background:var(--pink-bg);border:0;border-radius:16px;padding:10px 14px;letter-spacing:.02em}
+input:focus,select:focus,textarea:focus{outline:3px solid var(--pink-light)}
+textarea{min-height:120px;resize:vertical}
+.row{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:0 16px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;border:0;border-radius:999px;padding:10px 18px;font:inherit;font-weight:700;cursor:pointer;background:var(--pink);color:var(--white);text-decoration:none}
+.btn:hover{background:var(--pink-dark)}
+.btn.sub{background:var(--pink-bg);color:var(--pink-dark)}
+.btn.line{background:var(--line)}
+.btn[disabled]{background:#d9dde5;color:#7a8699;cursor:not-allowed}
+.btn.done{background:var(--pink-light);color:var(--pink-dark)}
+.btns{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+.hint{font-size:13px;color:var(--ink-sub);margin:6px 0 0}
+.cc{font-size:13px;color:var(--ink-sub);word-break:break-all}
+.person{background:var(--pink-bg);border-radius:24px;padding:16px;margin:12px 0}
+.person h3{margin:0 0 4px;font-size:17px;font-weight:700}
+.person .meta{font-size:13px;color:var(--ink-sub);word-break:break-all}
+.preview{white-space:pre-wrap;background:var(--white);border-radius:16px;padding:12px 14px;font-size:14px;margin-top:10px;word-break:break-word}
+.err{color:#b3261e;font-size:13px;margin:6px 0 0}
+.warn{color:#8a5a00;background:#fff4d6;border-radius:12px;padding:4px 10px;font-size:13px;margin:6px 0 0;display:inline-block}
+.tag{display:inline-block;border-radius:999px;padding:2px 10px;font-size:12px;font-weight:700;letter-spacing:.1em;background:var(--yellow);color:var(--ink)}
+.report{font-size:24px;font-weight:700;color:var(--pink)}
+#toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:var(--ink);color:var(--white);border-radius:999px;padding:10px 18px;font-size:14px;opacity:0;transition:opacity .2s;pointer-events:none;max-width:calc(100% - 32px)}
+#toast.show{opacity:1}
+details summary{cursor:pointer;color:var(--pink-dark);font-weight:700}
+@media (max-width:480px){.hero h1{font-size:22px}.card{padding:20px 16px;border-radius:28px}}
+</style>
+</head>
+<body>
+<header class="hero">
+  <h1>HagiiZ メール作成ツール</h1>
+  <p class="lead">知り合いに、1通ずつ宛名入りのご案内メールを送るためのツールです。<br>入力した内容はこのブラウザの中だけに保存され、外には送られません。</p>
+</header>
+<main>
+  <section class="card" id="step-setup"><h2><span class="num">0</span>最初の設定</h2><div id="setup"></div></section>
+  <section class="card" id="step-contacts"><h2><span class="num">1</span>宛先</h2><div id="contacts"></div></section>
+  <section class="card" id="step-send"><h2><span class="num">2</span>本文を見て送る</h2><div id="send"></div></section>
+  <section class="card" id="step-report"><h2><span class="num">3</span>報告</h2><div id="report"></div></section>
+  <section class="card" id="step-data"><h2>データ</h2><div id="data"></div></section>
+</main>
+<div id="toast" role="status" aria-live="polite"></div>
+<script>// キャンペーンごとに書き換えるのはこのファイルだけ
+(function (root) {
+  const CAMPAIGN = {
+    name: 'ともプロ！2026',
+    url: 'https://www.kikin.tohoku.ac.jp/project/tomopro/2026/pj_009_2026',
+    title: '科学の楽しさを、子どもから大人まで。東北の博士学生がつくる遊びと対話',
+    period: '10月1日（木）から11月30日（月）まで',
+    goal: '50万円',
+    uses: '高校への出前授業、科学を楽しみながら学ぶボードゲーム、\n探究の失敗を体験する脱出ゲーム、ゲストハウスでのサイエンスカフェ。',
+    example: 'たとえば5,000円でサイエンスカフェ1回分の会場費になります',
+    line: 'https://lin.ee/X78sq8H',
+    ccLocal: 'hagiiz.syde.project',
+    ccDomain: 'gmail.com',
+    ccTag: 'tp26',
+  };
+  const KINDS = {
+    family:   { label: '親族', honorific: 'さん', casual: true,  line: true },
+    mentor:   { label: '恩師・お世話になった大人', honorific: '先生', casual: false, line: false },
+    research: { label: '研究・学会で会った人', honorific: '様', casual: false, line: false },
+    friend:   { label: '友人・同世代', honorific: 'さん', casual: true,  line: true },
+  };
+
+  // 差し込み記号: {宛名} {冒頭} {名乗り} {名前} {署名} {URL} {タイトル} {期間} {目標} {使いみち} {例} {LINE}
+  const POLITE_BODY = [
+    '{宛名}',
+    '',
+    'ご無沙汰しております。{名乗り}',
+    '{冒頭}',
+    '',
+    '本日は、私が参加している学生団体「サイエンスイベント同好会HagiiZ（ハギーズ）」の\nクラウドファンディングのご案内でご連絡いたしました。',
+    '',
+    '東北大学基金の学生プロジェクト支援「ともプロ！2026」として、\n{期間}、ご寄附を受け付けています（目標{目標}）。\n▼ {タイトル}\n{URL}',
+    '',
+    '{使いみち}\nこの4つの「遊びと対話」の場づくりに、いただいたご支援を使わせていただきます。\n（{例}）',
+    '',
+    'ご関心をお持ちいただけましたら、ご寄附をご検討いただけますと幸いです。\nページをご覧いただく、周りの方にご紹介いただくだけでも、大変励みになります。',
+    '',
+    '突然のご連絡で失礼いたしました。\nどうぞよろしくお願いいたします。',
+    '',
+    '{署名}',
+  ].join('\n');
+
+  const CASUAL_BODY = [
+    '{宛名}',
+    '',
+    '{名前}です。{冒頭}',
+    '',
+    'いま大学で入っている「サイエンスイベント同好会HagiiZ（ハギーズ）」で、\n東北大学のクラウドファンディング「ともプロ！2026」に挑戦しています。\n{期間}、目標は{目標}です。',
+    '',
+    'どんな内容かはここで読めます。\n▼ {タイトル}\n{URL}',
+    '',
+    '高校への出前授業やボードゲームづくり、サイエンスカフェに使うお金を集めています。\n無理のない範囲で応援してもらえたら、ページを見てもらえるだけでも嬉しいです！',
+    '',
+    '{名前}',
+  ].join('\n');
+
+  const TEMPLATES = {
+    family: {
+      subject: '【お知らせ】大学のクラウドファンディングに挑戦しています（{名前}）',
+      body: CASUAL_BODY,
+      line: 'いま大学で入っている「サイエンスイベント同好会HagiiZ」で、東北大学のクラウドファンディング「ともプロ！2026」に挑戦しています（{期間}、目標{目標}）。\nどんな内容かはここで読めます → {URL}\nHagiiZの公式LINEでも進み具合をお知らせしてます → {LINE}\n無理のない範囲で応援してもらえたら嬉しいです！',
+      openingExamples: ['元気にしてる？', 'この前はありがとう！', '最近は大学で科学イベントの活動をがんばってるよ。'],
+    },
+    mentor: {
+      subject: '【ご案内】東北大学基金「ともプロ！2026」のクラウドファンディングについて（{名前}）',
+      body: POLITE_BODY,
+      openingExamples: ['高校時代は大変お世話になりました。', '部活動では大変お世話になりました。', 'その節は大変お世話になりました。'],
+    },
+    research: {
+      subject: '【ご案内】東北大学基金「ともプロ！2026」でクラウドファンディングに挑戦しています（HagiiZ {名前}）',
+      body: POLITE_BODY,
+      openingExamples: ['〇〇学会でお話しさせていただいた際は、ありがとうございました。', '先日は名刺交換をさせていただき、ありがとうございました。', '〇〇の際は大変お世話になりました。'],
+    },
+    friend: {
+      subject: '大学のクラウドファンディングに挑戦してます（{名前}）',
+      body: CASUAL_BODY,
+      line: '大学で入ってる「サイエンスイベント同好会HagiiZ」で、東北大学のクラウドファンディング「ともプロ！2026」に挑戦してます（{期間}、目標{目標}）。\n中身はここ → {URL}\n公式LINEもあるよ → {LINE}\nよかったら見てみて、シェアしてもらえるだけでも助かる！',
+      openingExamples: ['久しぶり！元気？', 'この前はありがとう！', '急に長文ごめん！'],
+    },
+  };
+  const api = { CAMPAIGN, KINDS, TEMPLATES };
+  if (typeof module !== 'undefined' && module.exports) module.exports = api;
+  else root.MailCampaign = api;
+})(this);
+
+// 画面から独立した純粋関数。Node でテストする
+(function (root) {
+  function normalizeRomaji(s) {
+    return String(s || '')
+      .normalize('NFKC')
+      .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+      .toLowerCase()
+      .replace(/[^a-z]/g, '');
+  }
+
+  function buildCc(campaign, romaji) {
+    const r = normalizeRomaji(romaji);
+    if (!r) return '';
+    return `${campaign.ccLocal}+${campaign.ccTag}-${r}@${campaign.ccDomain}`;
+  }
+
+  function buildGmailUrl({ account, to, cc, subject, body }) {
+    const params = [
+      ['authuser', account], ['view', 'cm'], ['fs', '1'], ['to', to],
+    ];
+    if (cc) params.push(['cc', cc]);
+    params.push(['su', subject], ['body', body]);
+    const qs = params.map(([k, v]) => `${k}=${encodeURIComponent(v)}`).join('&');
+    return `https://mail.google.com/mail/?${qs}`;
+  }
+
+  function surnameOf(name) {
+    const s = String(name || '').trim();
+    const parts = s.split(/[\s\u3000]+/);
+    return parts.length > 1 ? parts[0] : s;
+  }
+
+  // constructor や __proto__ のような継承プロパティを種類とみなさない
+  function hasKind(kinds, kind) {
+    return typeof kind === 'string' && Object.prototype.hasOwnProperty.call(kinds, kind);
+  }
+
+  function suggestSalutation(name, kind, kinds) {
+    const base = surnameOf(name);
+    if (!base || !hasKind(kinds, kind)) return '';
+    return base + kinds[kind].honorific;
+  }
+
+  function univPrefix(profile) {
+    return profile.status === 'doctor' ? '東北大学大学院' : '東北大学';
+  }
+
+  function defaultSignature(profile) {
+    return [
+      '--',
+      profile.name,
+      `${univPrefix(profile)} ${profile.affiliation}`,
+      'サイエンスイベント同好会HagiiZ',
+      profile.account,
+    ].join('\n');
+  }
+
+  function fill(text, vars) {
+    return text.replace(/\{([^}]+)\}/g, (m, k) => (k in vars ? vars[k] : m));
+  }
+
+  function varsFor(campaign, profile, contact) {
+    return {
+      宛名: contact.salutation || '',
+      冒頭: contact.opening || '',
+      名前: profile.name || '',
+      名乗り: `${univPrefix(profile)}${profile.affiliation}の${profile.name}です。`,
+      署名: profile.signature || defaultSignature(profile),
+      URL: campaign.url, タイトル: campaign.title, 期間: campaign.period,
+      目標: campaign.goal, 使いみち: campaign.uses, 例: campaign.example, LINE: campaign.line,
+    };
+  }
+
+  function composeMail(campaign, templates, kinds, profile, contact) {
+    if (!hasKind(templates, contact.kind)) throw new Error('相手の種類が不正です');
+    const t = templates[contact.kind];
+    const vars = varsFor(campaign, profile, contact);
+    let body = contact.customBody || fill(t.body, vars);
+    if (!contact.customBody) body = body.replace(/\n{3,}/g, '\n\n');
+    return {
+      to: String(contact.email || '').trim(),
+      cc: contact.ccOff ? '' : buildCc(campaign, profile.romaji),
+      subject: fill(t.subject, vars),
+      body,
+    };
+  }
+
+  function buildLineText(campaign, templates, kinds, profile, contact) {
+    if (!hasKind(kinds, contact.kind) || !hasKind(templates, contact.kind)) return '';
+    const k = kinds[contact.kind];
+    const t = templates[contact.kind];
+    if (!k.line || !t.line) return '';
+    return fill(t.line, varsFor(campaign, profile, contact));
+  }
+
+  const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  const PLACEHOLDER_RE = /○○|〇〇|要確認/;
+  const CIRCLES_RE = /○○|〇〇/;
+  const CUSTOM_BODY_WARNING = '本文を手で直しています。宛名・冒頭の変更は反映されません（「テンプレートに戻す」で反映）';
+  const normEmail = (e) => String(e || '').trim().toLowerCase();
+
+  function validateProfile(profile) {
+    const errs = [];
+    if (!String(profile.name || '').trim()) errs.push('最初の設定で名前を入れてください');
+    if (!String(profile.affiliation || '').trim()) errs.push('最初の設定で所属を入れてください');
+    if (!normalizeRomaji(profile.romaji)) errs.push('苗字のローマ字を英字で入れてください（CCの集計に使います）');
+    if (!EMAIL_RE.test(String(profile.account || '').trim())) errs.push('送信に使うGmailアドレスを入れてください');
+    return errs;
+  }
+
+  function validateContact(campaign, templates, kinds, profile, contact, allContacts) {
+    const errors = [], warnings = [];
+    if (validateProfile(profile).length) errors.push('最初の設定に不足があります');
+    const sal = String(contact.salutation || '').trim();
+    if (!sal || PLACEHOLDER_RE.test(sal)) errors.push('宛名を入れてください（「○○」のままでは開けません）');
+    if (!EMAIL_RE.test(String(contact.email || '').trim())) errors.push('メールアドレスを確認してください');
+    if (!hasKind(kinds, contact.kind) || !hasKind(templates, contact.kind)) errors.push('相手の種類を選んでください');
+    // 手直し本文があるときは冒頭は本文に入らないので、本文側の検査に任せる
+    if (!contact.customBody && CIRCLES_RE.test(String(contact.opening || ''))) {
+      errors.push('冒頭の一言の「〇〇」を書きかえてください（そのままでは開けません）');
+    }
+    const me = normEmail(contact.email);
+    if (me && allContacts.some(o => o.id !== contact.id && normEmail(o.email) === me)) {
+      warnings.push('同じアドレスが別の行にもあります（重複）');
+    }
+    if (contact.customBody) warnings.push(CUSTOM_BODY_WARNING);
+    if (!errors.length) {
+      const m = composeMail(campaign, templates, kinds, profile, contact);
+      if (CIRCLES_RE.test(m.body)) errors.push('本文に「〇〇」が残っています（書きかえるまで開けません）');
+      if (!m.body.includes(campaign.url)) warnings.push('本文にプロジェクトのURLが入っていません');
+      if (m.body.includes('要確認')) warnings.push('本文に「要確認」が残っています');
+    }
+    return { errors, warnings };
+  }
+
+  let seq = 0;
+  function parsePasted(text, defaultKind) {
+    const out = [];
+    for (const raw of String(text || '').split(/\r?\n/)) {
+      const cells = raw.split(/\t|,/).map(c => c.replace(/^[\s\u3000]+|[\s\u3000]+$/g, '')).filter(Boolean);
+      if (!cells.length) continue;
+      const emailIdx = cells.findIndex(c => EMAIL_RE.test(c));
+      const email = emailIdx >= 0 ? cells[emailIdx] : '';
+      const rest = cells.filter((_, i) => i !== emailIdx);
+      const name = rest[0] || '';
+      if (!email && /^(名前|氏名|name)$/i.test(name)) continue;
+      if (!email && rest.some(c => /^(メール|mail|e-?mail)$/i.test(c))) continue;
+      out.push({ id: `c${++seq}-${Date.now()}`, name, salutation: '', email, kind: defaultKind,
+                 opening: '', customBody: '', ccOff: false, sent: false, lineSent: false });
+    }
+    return out;
+  }
+
+  function buildReport(contacts) {
+    const mail = contacts.filter(c => c.sent).length;
+    const line = contacts.filter(c => c.lineSent).length;
+    return `メール${mail}通／LINE${line}人`;
+  }
+
+  const api = { CUSTOM_BODY_WARNING, hasKind, normalizeRomaji, buildCc, buildGmailUrl, suggestSalutation, defaultSignature, composeMail, buildLineText, validateProfile, validateContact, parsePasted, buildReport };
+  if (typeof module !== 'undefined' && module.exports) module.exports = api;
+  else root.MailCore = api;
+})(this);
+
+(function (root) {
+  const KEY = 'hagiiz-mail-tool-v1';
+
+  function emptyState() {
+    return { version: 1, profile: { name: '', romaji: '', status: 'undergrad', affiliation: '', account: '', signature: '' }, contacts: [] };
+  }
+
+  function coerce(obj) {
+    if (!obj || typeof obj !== 'object' || obj.version !== 1 || !Array.isArray(obj.contacts) || typeof obj.profile !== 'object') return null;
+    const base = emptyState();
+    return { version: 1, profile: { ...base.profile, ...obj.profile }, contacts: obj.contacts };
+  }
+
+  function load(storage) {
+    try {
+      const raw = storage.getItem(KEY);
+      if (!raw) return emptyState();
+      return coerce(JSON.parse(raw)) || emptyState();
+    } catch (e) {
+      return emptyState();
+    }
+  }
+
+  function save(storage, state) {
+    try { storage.setItem(KEY, JSON.stringify(state)); return true; } catch (e) { return false; }
+  }
+
+  function clear(storage) {
+    try { storage.removeItem(KEY); return true; } catch (e) { return false; }
+  }
+
+  function exportJson(state) { return JSON.stringify(state, null, 1); }
+
+  function importJson(text) {
+    let obj;
+    try { obj = JSON.parse(text); } catch (e) { throw new Error('読み込めないファイルです'); }
+    const s = coerce(obj);
+    if (!s) throw new Error('読み込めないファイルです');
+    return s;
+  }
+
+  const api = { KEY, emptyState, load, save, clear, exportJson, importJson };
+  if (typeof module !== 'undefined' && module.exports) module.exports = api;
+  else root.MailStorage = api;
+})(this);
+
+(function () {
+  const { CAMPAIGN, KINDS, TEMPLATES } = window.MailCampaign;
+  const Core = window.MailCore;
+  const Store = window.MailStorage;
+  const ls = (() => { try { return window.localStorage; } catch (e) { return null; } })();
+  const store = ls || { getItem() { return null; }, setItem() { throw new Error('no storage'); }, removeItem() {} };
+  const hasKind = (kind) => Core.hasKind(KINDS, kind);
+
+  // 保存データが古い形・欠けた形でも壊れないように補う
+  function normalizeContact(c, i) {
+    const d = { id: '', name: '', salutation: '', email: '', kind: '', opening: '', customBody: '', ccOff: false, sent: false, lineSent: false };
+    const base = (c && typeof c === 'object') ? c : {};
+    const out = Object.assign({}, d, base);
+    if (!out.id) out.id = `c${i}-${Date.now()}`;
+    return out;
+  }
+  function normalizeState(s) {
+    const p = (s && typeof s === 'object' && s.profile && typeof s.profile === 'object') ? s.profile : {};
+    s.profile = Object.assign({ name: '', romaji: '', status: 'undergrad', affiliation: '', account: '', signature: '' }, p);
+    if (s.profile.status !== 'undergrad' && s.profile.status !== 'doctor') s.profile.status = 'undergrad';
+    s.contacts = Array.isArray(s.contacts) ? s.contacts.map(normalizeContact) : [];
+    return s;
+  }
+
+  let state = normalizeState(Store.load(store));
+  let saveWarned = false;
+
+  // 再描画をまたいで残す下書き・開閉状態・フォーカス位置
+  const emptyPasteDraft = () => ({ text: '', kind: 'mentor' });
+  let pasteDraft = emptyPasteDraft();
+  const openDetails = new Set();
+  if (state.profile.signature) openDetails.add('sign');
+
+  const $ = (id) => document.getElementById(id);
+  const esc = (s) => String(s == null ? '' : s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+
+  function bindDetailsToggle(container) {
+    container.querySelectorAll('details[data-key]').forEach(d => {
+      d.addEventListener('toggle', () => {
+        const k = d.dataset.key;
+        if (d.open) openDetails.add(k); else openDetails.delete(k);
+      });
+    });
+  }
+
+  // ---- フォーカス位置の保存・復元（行の追加・削除など、全体を描き直すときだけ使う）
+  function focusKeyOf(el) {
+    if (!el) return null;
+    const person = el.closest ? el.closest('.person') : null;
+    if (person && el.dataset && el.dataset.f) return { type: 'person', id: person.dataset.id, sel: `[data-f="${el.dataset.f}"]` };
+    if (person && el.dataset && el.dataset.act) return { type: 'person', id: person.dataset.id, sel: `[data-act="${el.dataset.act}"]` };
+    if (el.id) return { type: 'id', id: el.id };
+    return null;
+  }
+
+  function captureFocus() {
+    const el = document.activeElement;
+    if (!el || el === document.body || el === document.documentElement) return null;
+    const key = focusKeyOf(el);
+    if (!key) return null;
+    let start = null, end = null;
+    try { if (typeof el.selectionStart === 'number') { start = el.selectionStart; end = el.selectionEnd; } } catch (e) {}
+    return { key, start, end };
+  }
+
+  function findByFocusKey(key) {
+    if (key.type === 'id') return document.getElementById(key.id);
+    if (key.type === 'person') {
+      const person = Array.from(document.querySelectorAll('.person')).find(p => p.dataset.id === key.id);
+      return person ? person.querySelector(key.sel) : null;
+    }
+    return null;
+  }
+
+  function restoreFocus(saved) {
+    if (!saved) return;
+    const el = findByFocusKey(saved.key);
+    if (!el) return;
+    el.focus();
+    if (saved.start != null && typeof el.setSelectionRange === 'function') {
+      try { el.setSelectionRange(saved.start, saved.end); } catch (e) {}
+    }
+  }
+
+  function toast(msg) {
+    const t = $('toast'); t.textContent = msg; t.classList.add('show');
+    clearTimeout(toast.timer); toast.timer = setTimeout(() => t.classList.remove('show'), 2600);
+  }
+
+  function persist() {
+    if (!Store.save(store, state) && !saveWarned) {
+      saveWarned = true;
+      toast('このブラウザでは自動保存できません。「書き出し」で保存してください');
+    }
+  }
+
+  async function copy(text) {
+    try { await navigator.clipboard.writeText(text); return true; } catch (e) {
+      const ta = document.createElement('textarea'); ta.value = text; document.body.appendChild(ta); ta.select();
+      let ok = false; try { ok = document.execCommand('copy'); } catch (e2) { ok = false; }
+      ta.remove(); return ok;
+    }
+  }
+
+  // ---- 0. 最初の設定
+  const PROFILE_FIELDS = [
+    ['p-name', 'name', null],
+    ['p-romaji', 'romaji', Core.normalizeRomaji],
+    ['p-aff', 'affiliation', null],
+    ['p-account', 'account', v => v.trim()],
+    ['p-sign', 'signature', null],
+  ];
+
+  function renderSetup() {
+    const p = state.profile;
+    $('setup').innerHTML = `
+      <div class="row">
+        <div><label for="p-name">名前（漢字）</label><input id="p-name" value="${esc(p.name)}" placeholder="宮岸 太一"></div>
+        <div><label for="p-romaji">苗字のローマ字</label><input id="p-romaji" value="${esc(p.romaji)}" placeholder="miyagishi" autocomplete="off"></div>
+      </div>
+      <p class="cc">CCに自動で入るアドレス：<b id="p-cc"></b><br>HagiiZの受信箱で、送った通数を数えるのに使います。</p>
+      <div class="row">
+        <div><label for="p-status">学年の区分</label>
+          <select id="p-status"><option value="undergrad"${p.status === 'undergrad' ? ' selected' : ''}>学部生</option><option value="doctor"${p.status === 'doctor' ? ' selected' : ''}>大学院生（博士・修士）</option></select></div>
+        <div><label for="p-aff">所属（学部・学科や研究科・専攻、学年）</label><input id="p-aff" value="${esc(p.affiliation)}" placeholder="工学部 材料科学総合学科 2年"></div>
+      </div>
+      <label for="p-account">送信に使うGmailアドレス</label><input id="p-account" type="email" value="${esc(p.account)}" placeholder="xxxx@dc.tohoku.ac.jp">
+      <p class="hint">このアドレスのGmailで作成画面を開きます。ブラウザで複数のGoogleアカウントにログインしていても、このアドレスが使われます。</p>
+      <details data-key="sign"${openDetails.has('sign') ? ' open' : ''}><summary>署名を直す（空欄なら自動）</summary>
+        <textarea id="p-sign">${esc(p.signature)}</textarea></details>
+      <div id="p-errs"></div>`;
+    // 文字の入力では画面を作り直さない（作り直すと次の欄への移動やボタンのクリックが消える）
+    PROFILE_FIELDS.forEach(([id, key, fn]) => {
+      const el = $(id);
+      el.addEventListener('input', () => {
+        state.profile[key] = fn ? fn(el.value) : el.value;
+        persist(); refreshDerived();
+      });
+      if (fn) el.addEventListener('change', () => { if (el.value !== state.profile[key]) el.value = state.profile[key]; });
+    });
+    $('p-status').addEventListener('change', (ev) => { state.profile.status = ev.target.value; persist(); renderAll(); });
+    bindDetailsToggle($('setup'));
+    refreshSetup();
+  }
+
+  function refreshSetup() {
+    const p = state.profile;
+    $('p-cc').textContent = Core.buildCc(CAMPAIGN, p.romaji) || '（ローマ字を入れると表示されます）';
+    $('p-sign').placeholder = Core.defaultSignature(p);
+    $('p-errs').innerHTML = Core.validateProfile(p).map(e => `<p class="err">${esc(e)}</p>`).join('');
+  }
+
+  // ---- 1. 宛先
+  function kindOptions(sel) {
+    const opts = Object.entries(KINDS).map(([k, v]) => `<option value="${k}"${k === sel ? ' selected' : ''}>${esc(v.label)}</option>`).join('');
+    if (!hasKind(sel)) return `<option value="" selected>（選んでください）</option>` + opts;
+    return opts;
+  }
+
+  function renderContacts() {
+    $('contacts').innerHTML = `
+      <details data-key="paste"${openDetails.has('paste') ? ' open' : ''}><summary>Excelやスプレッドシートからまとめて貼り付け</summary>
+        <p class="hint">1行に1人。「名前」と「メールアドレス」の2列をコピーして貼り付けてください（順番はどちらでも可）。</p>
+        <textarea id="paste" placeholder="山田 花子\tyamada@example.com">${esc(pasteDraft.text)}</textarea>
+        <label for="paste-kind">相手の種類（あとで1人ずつ変えられます）</label><select id="paste-kind">${kindOptions(pasteDraft.kind)}</select>
+        <div class="btns"><button class="btn" id="paste-go">取り込む</button></div>
+      </details>
+      <div class="btns"><button class="btn sub" id="add-one">＋ 1人追加</button></div>
+      <p class="hint">${state.contacts.length}人</p>`;
+    $('add-one').onclick = () => {
+      state.contacts.push({ id: `c${Date.now()}`, name: '', salutation: '', email: '', kind: 'mentor', opening: '', customBody: '', ccOff: false, sent: false, lineSent: false });
+      persist(); renderAll();
+    };
+    $('paste').addEventListener('input', (ev) => { pasteDraft.text = ev.target.value; });
+    $('paste-kind').addEventListener('change', (ev) => { pasteDraft.kind = ev.target.value; });
+    $('paste-go').onclick = () => {
+      const rows = Core.parsePasted($('paste').value, $('paste-kind').value);
+      if (!rows.length) { toast('取り込める行がありません'); return; }
+      rows.forEach(r => { r.salutation = Core.suggestSalutation(r.name, r.kind, KINDS); });
+      state.contacts.push(...rows); persist();
+      pasteDraft = emptyPasteDraft();
+      renderAll();
+      toast(`${rows.length}人を取り込みました`);
+    };
+    bindDetailsToggle($('contacts'));
+  }
+
+  // ---- 2. 本文を見て送る
+  // 行の骨組みだけを作る。検査結果・件名・本文などは refreshCard で埋める
+  function cardSkeleton(c) {
+    const k = hasKind(c.kind) ? KINDS[c.kind] : null;
+    const ex = hasKind(c.kind) && Object.prototype.hasOwnProperty.call(TEMPLATES, c.kind) ? (TEMPLATES[c.kind].openingExamples || []) : [];
+    return `<div class="person" data-id="${esc(c.id)}">
+        <h3 data-part="title"></h3>
+        <div class="row">
+          <div><label>名前</label><input data-f="name" value="${esc(c.name)}"></div>
+          <div><label>宛名</label><input data-f="salutation" value="${esc(c.salutation)}" placeholder="山田先生"></div>
+          <div><label>メール</label><input data-f="email" type="email" value="${esc(c.email)}"></div>
+          <div><label>相手の種類</label><select data-f="kind">${kindOptions(c.kind)}</select></div>
+        </div>
+        <label>冒頭の一言</label><input data-f="opening" value="${esc(c.opening)}" list="ex-${esc(c.id)}" placeholder="${esc(ex[0] || '')}">
+        <datalist id="ex-${esc(c.id)}">${ex.map(e => `<option value="${esc(e)}">`).join('')}</datalist>
+        <label><input type="checkbox" data-f="ccOff"${c.ccOff ? ' checked' : ''} style="width:auto"> このメールはCCを付けない</label>
+        <div data-part="msgs"></div>
+        <div data-part="compose" hidden>
+          <p class="meta" data-part="meta"></p>
+          <details data-key="body-${esc(c.id)}"${openDetails.has('body-' + c.id) ? ' open' : ''}><summary>本文を見る・直す</summary>
+            <textarea data-f="customBody"></textarea>
+            <div class="btns"><button class="btn sub" data-act="reset">テンプレートに戻す</button></div>
+          </details>
+        </div>
+        <div class="btns">
+          <button class="btn" data-act="open">Gmailで開く</button>
+          ${k && k.line ? `<button class="btn line" data-act="line">LINE用の文をコピー</button>` : ''}
+          <button class="btn sub" data-act="sent">${c.sent ? '送った印を外す' : '送った'}</button>
+          ${k && k.line ? `<button class="btn sub" data-act="lineSent">${c.lineSent ? 'LINEの印を外す' : 'LINEで送った'}</button>` : ''}
+          <button class="btn sub" data-act="del">削除</button>
+        </div>
+      </div>`;
+  }
+
+  function composeFor(c) {
+    const v = Core.validateContact(CAMPAIGN, TEMPLATES, KINDS, state.profile, c, state.contacts);
+    // preview は表示用（エラーがあっても本文は見せて直せるようにする）。m は送ってよいときだけ
+    const preview = hasKind(c.kind) ? Core.composeMail(CAMPAIGN, TEMPLATES, KINDS, state.profile, c) : null;
+    const m = (preview && !v.errors.length) ? preview : null;
+    return { v, m, preview };
+  }
+
+  // 入力欄はそのままにして、検査結果・件名・本文・ボタンの状態だけを書きかえる
+  function refreshCard(el, c) {
+    const { v, preview } = composeFor(c);
+    el.querySelector('[data-part="title"]').innerHTML = `${esc(c.name || '（名前未入力）')} ${c.sent ? '<span class="tag">送信済み</span>' : ''} ${c.lineSent ? '<span class="tag">LINE済み</span>' : ''}`;
+    el.querySelector('[data-part="msgs"]').innerHTML =
+      v.errors.map(e => `<p class="err">${esc(e)}</p>`).join('') + v.warnings.map(e => `<p class="warn">${esc(e)}</p>`).join('');
+    const comp = el.querySelector('[data-part="compose"]');
+    comp.hidden = !preview;
+    if (preview) {
+      el.querySelector('[data-part="meta"]').innerHTML = `件名：${esc(preview.subject)}<br>CC：${esc(preview.cc || 'なし')}`;
+      const ta = el.querySelector('[data-f="customBody"]');
+      if (document.activeElement !== ta && ta.value !== preview.body) ta.value = preview.body;
+    }
+    const open = el.querySelector('[data-act="open"]');
+    open.disabled = v.errors.length > 0;
+    open.classList.toggle('done', !!c.sent);
+    open.textContent = c.sent ? 'もう一度Gmailで開く' : 'Gmailで開く';
+    const line = el.querySelector('[data-act="line"]');
+    if (line) line.disabled = !!(v.errors.length && !c.salutation);
+  }
+
+  function refreshAllCards() {
+    document.querySelectorAll('#send .person').forEach(el => {
+      const c = state.contacts.find(x => x.id === el.dataset.id);
+      if (c) refreshCard(el, c);
+    });
+  }
+
+  function refreshDerived() { refreshSetup(); refreshAllCards(); }
+
+  // 入力欄1つ分の値を c に入れる。値が変わっていなければ何もしない
+  function applyField(el, c, inp) {
+    const f = inp.dataset.f;
+    if (f === 'ccOff') { c.ccOff = inp.checked; return; }
+    if (f === 'customBody') {
+      if (el.querySelector('[data-part="compose"]').hidden) return;
+      const fresh = hasKind(c.kind) ? Core.composeMail(CAMPAIGN, TEMPLATES, KINDS, state.profile, { ...c, customBody: '' }).body : null;
+      c.customBody = (fresh !== null && inp.value === fresh) ? '' : inp.value;
+      return;
+    }
+    if (c[f] === inp.value) return;
+    c[f] = inp.value;
+    if ((f === 'name' || f === 'kind') && !c.salutationTouched) {
+      c.salutation = Core.suggestSalutation(c.name, c.kind, KINDS);
+      el.querySelector('[data-f="salutation"]').value = c.salutation;
+    }
+    if (f === 'salutation') c.salutationTouched = true;
+  }
+
+  function syncCard(el, c) {
+    el.querySelectorAll('input[data-f], textarea[data-f]').forEach(inp => applyField(el, c, inp));
+  }
+
+  function renderSend() {
+    const wrap = $('send');
+    if (!state.contacts.length) { wrap.innerHTML = '<p class="hint">「1. 宛先」で相手を追加すると、ここに1通ずつ表示されます。</p>'; return; }
+    wrap.innerHTML = state.contacts.map(cardSkeleton).join('');
+
+    wrap.querySelectorAll('.person').forEach(el => {
+      const c = state.contacts.find(x => x.id === el.dataset.id);
+      if (!c) return;
+      el.querySelectorAll('input[data-f], textarea[data-f]').forEach(inp => {
+        const ev = inp.type === 'checkbox' ? 'change' : 'input';
+        inp.addEventListener(ev, () => { applyField(el, c, inp); persist(); refreshAllCards(); });
+      });
+      // 種類が変わるとボタンや例文が変わるので、ここだけは作り直す
+      el.querySelector('select[data-f="kind"]').addEventListener('change', (ev) => {
+        applyField(el, c, ev.target); persist(); renderAll();
+      });
+      el.querySelectorAll('[data-act]').forEach(btn => btn.addEventListener('click', async () => {
+        const act = btn.dataset.act;
+        syncCard(el, c);
+        if (act === 'open') {
+          const { v, m } = composeFor(c);
+          if (!m) { persist(); refreshAllCards(); toast(v.errors[0] || '開けません'); return; }
+          const copied = copy(m.body);
+          window.open(Core.buildGmailUrl({ account: state.profile.account.trim(), ...m }), '_blank', 'noopener');
+          persist();
+          await copied;
+          toast('Gmailを開きました。本文が空なら貼り付け（Ctrl+V）してください。送ったら「送った」を押してください');
+        } else if (act === 'line') {
+          if (!hasKind(c.kind)) return;
+          persist();
+          const ok = await copy(Core.buildLineText(CAMPAIGN, TEMPLATES, KINDS, state.profile, c));
+          toast(ok ? 'LINE用の文をコピーしました' : 'コピーできませんでした');
+        } else if (act === 'sent') { c.sent = !c.sent; persist(); renderAll(); }
+        else if (act === 'lineSent') { c.lineSent = !c.lineSent; persist(); renderAll(); }
+        else if (act === 'reset') { c.customBody = ''; persist(); renderAll(); }
+        else if (act === 'del') {
+          if (confirm(`${c.name || 'この行'}を削除しますか？`)) { state.contacts = state.contacts.filter(x => x.id !== c.id); persist(); renderAll(); }
+        }
+      }));
+      refreshCard(el, c);
+    });
+    bindDetailsToggle(wrap);
+  }
+
+  // ---- 3. 報告
+  function renderReport() {
+    const text = Core.buildReport(state.contacts);
+    $('report').innerHTML = `<p class="report">${esc(text)}</p><div class="btns"><button class="btn" id="copy-report">報告文をコピー</button></div>`;
+    $('copy-report').onclick = async () => toast((await copy(text)) ? 'コピーしました。グループに貼ってください' : 'コピーできませんでした');
+  }
+
+  // ---- データ
+  function renderData() {
+    $('data').innerHTML = `<p class="hint">入力内容はこのブラウザに自動保存されます。別のPCで続けるときや、念のための控えには「書き出し」を使ってください。</p>
+      <p class="hint">共用のPCで使ったあとは『全部消す』を押してください</p>
+      <div class="btns"><button class="btn sub" id="export">書き出し</button>
+      <label class="btn sub" style="margin:0">読み込み<input type="file" id="import" accept="application/json" hidden></label>
+      <button class="btn sub" id="wipe">全部消す</button></div>`;
+    $('export').onclick = () => {
+      const blob = new Blob([Store.exportJson(state)], { type: 'application/json' });
+      const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = 'hagiiz_mail_tool.json'; a.click();
+      setTimeout(() => URL.revokeObjectURL(a.href), 1000);
+    };
+    $('import').onchange = async (ev) => {
+      const f = ev.target.files[0]; if (!f) return;
+      ev.target.value = '';
+      try {
+        const next = normalizeState(Store.importJson(await f.text()));
+        if (!confirm('今の宛先と送信の印を、読み込むファイルの内容で置き換えます。よろしいですか？')) return;
+        state = next;
+        if (state.profile.signature) openDetails.add('sign');
+        persist(); renderAll(); toast('読み込みました');
+      }
+      catch (e) { toast(e.message); }
+    };
+    $('wipe').onclick = () => {
+      if (confirm('設定と宛先をすべて消します。よろしいですか？（書き出したファイルは消えません）')) {
+        Store.clear(store); state = Store.emptyState();
+        pasteDraft = emptyPasteDraft(); openDetails.clear();
+        renderAll();
+      }
+    };
+  }
+
+  function renderAll() {
+    const focus = captureFocus();
+    renderSetup(); renderContacts(); renderSend(); renderReport(); renderData();
+    restoreFocus(focus);
+  }
+  renderAll();
+})();
+</script>
+</body>
+</html>
