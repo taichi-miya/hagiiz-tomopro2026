@@ -21,8 +21,9 @@ main{max-width:880px;margin:0 auto;padding:8px 16px 48px;display:grid;gap:20px}
 .card h2{font-size:20px;font-weight:700;margin:0 0 16px;display:flex;align-items:center;gap:10px}
 .num{display:inline-grid;place-items:center;width:32px;height:32px;border-radius:999px;background:var(--yellow);color:var(--ink);font-size:16px}
 label{display:block;font-size:14px;color:var(--ink-sub);margin:12px 0 4px}
-input,select,textarea{width:100%;font:inherit;color:var(--ink);background:var(--pink-bg);border:0;border-radius:16px;padding:10px 14px;letter-spacing:.02em}
-input:focus,select:focus,textarea:focus{outline:3px solid var(--pink-light)}
+input,select,textarea{width:100%;font:inherit;color:var(--ink);background:var(--white);border:2px solid var(--pink-light);border-radius:16px;padding:8px 12px;letter-spacing:.02em}
+input[type="checkbox"]{width:auto;border:0;padding:0}
+input:focus,select:focus,textarea:focus{outline:3px solid var(--pink-light);border-color:var(--pink)}
 textarea{min-height:120px;resize:vertical}
 .row{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:0 16px}
 .btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;border:0;border-radius:999px;padding:10px 18px;font:inherit;font-weight:700;cursor:pointer;background:var(--pink);color:var(--white);text-decoration:none}
@@ -31,6 +32,14 @@ textarea{min-height:120px;resize:vertical}
 .btn.line{background:var(--line)}
 .btn[disabled]{background:#d9dde5;color:#7a8699;cursor:not-allowed}
 .btn.done{background:var(--pink-light);color:var(--pink-dark)}
+.btn.status{background:var(--white);color:var(--ink-sub);border:2px dashed var(--pink-mid);padding:8px 16px}
+.btn.status:hover{background:var(--pink-bg);color:var(--ink)}
+.btn.status.on{background:var(--ink);color:var(--white);border:2px solid var(--ink)}
+.btn.status.line-status.on{background:var(--line);border-color:var(--line)}
+.btn.status.on:hover{filter:brightness(1.12)}
+.person .btn.sub{background:var(--white)}
+.person.is-mail-done{box-shadow:inset 8px 0 0 var(--ink)}
+.person.is-line-done{box-shadow:inset 8px 0 0 var(--line)}
 .btns{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
 .hint{font-size:13px;color:var(--ink-sub);margin:6px 0 0}
 .cc{font-size:13px;color:var(--ink-sub);word-break:break-all}
@@ -72,6 +81,7 @@ details summary{cursor:pointer;color:var(--pink-dark);font-weight:700}
     uses: '高校への出前授業、科学を楽しみながら学ぶボードゲーム、\n探究の失敗を体験する脱出ゲーム、ゲストハウスでのサイエンスカフェ。',
     example: 'たとえば5,000円でサイエンスカフェ1回分の会場費になります',
     line: 'https://lin.ee/X78sq8H',
+    kit: 'https://taichi-miya.github.io/hagiiz-tomopro2026/kit/',
     ccLocal: 'hagiiz.syde.project',
     ccDomain: 'gmail.com',
     ccTag: 'tp26',
@@ -83,7 +93,7 @@ details summary{cursor:pointer;color:var(--pink-dark);font-weight:700}
     friend:   { label: '友人・同世代', honorific: 'さん', casual: true,  line: true },
   };
 
-  // 差し込み記号: {宛名} {冒頭} {名乗り} {名前} {署名} {URL} {タイトル} {期間} {目標} {使いみち} {例} {LINE}
+  // 差し込み記号: {宛名} {冒頭} {名乗り} {名前} {署名} {URL} {タイトル} {期間} {目標} {使いみち} {例} {LINE} {キット}
   const POLITE_BODY = [
     '{宛名}',
     '',
@@ -96,7 +106,7 @@ details summary{cursor:pointer;color:var(--pink-dark);font-weight:700}
     '',
     '{使いみち}\nこの4つの「遊びと対話」の場づくりに、いただいたご支援を使わせていただきます。\n（{例}）',
     '',
-    'ご関心をお持ちいただけましたら、ご寄附をご検討いただけますと幸いです。\nページをご覧いただく、周りの方にご紹介いただくだけでも、大変励みになります。',
+    'ご関心をお持ちいただけましたら、ご寄附をご検討いただけますと幸いです。\nページをご覧いただく、周りの方にご紹介いただくだけでも、大変励みになります。\n周りの方にご紹介いただける場合は、投稿文と画像をまとめた「ご紹介キット」もお使いください。\n▼ {キット}',
     '',
     '突然のご連絡で失礼いたしました。\nどうぞよろしくお願いいたします。',
     '',
@@ -112,7 +122,7 @@ details summary{cursor:pointer;color:var(--pink-dark);font-weight:700}
     '',
     'どんな内容かはここで読めます。\n▼ {タイトル}\n{URL}',
     '',
-    '高校への出前授業やボードゲームづくり、サイエンスカフェに使うお金を集めています。\n無理のない範囲で応援してもらえたら、ページを見てもらえるだけでも嬉しいです！',
+    '高校への出前授業やボードゲームづくり、サイエンスカフェに使うお金を集めています。\n無理のない範囲で応援してもらえたら、ページを見てもらえるだけでも嬉しいです！\nシェア用の文と画像はここ → {キット}',
     '',
     '{名前}',
   ].join('\n');
@@ -121,7 +131,7 @@ details summary{cursor:pointer;color:var(--pink-dark);font-weight:700}
     family: {
       subject: '【お知らせ】大学のクラウドファンディングに挑戦しています（{名前}）',
       body: CASUAL_BODY,
-      line: 'いま大学で入っている「サイエンスイベント同好会HagiiZ」で、東北大学のクラウドファンディング「ともプロ！2026」に挑戦しています（{期間}、目標{目標}）。\nどんな内容かはここで読めます → {URL}\nHagiiZの公式LINEでも進み具合をお知らせしてます → {LINE}\n無理のない範囲で応援してもらえたら嬉しいです！',
+      line: 'いま大学で入っている「サイエンスイベント同好会HagiiZ」で、東北大学のクラウドファンディング「ともプロ！2026」に挑戦しています（{期間}、目標{目標}）。\nどんな内容かはここで読めます → {URL}\nHagiiZの公式LINEでも進み具合をお知らせしてます → {LINE}\nシェア用の文と画像はここ → {キット}\n無理のない範囲で応援してもらえたら嬉しいです！',
       openingExamples: ['元気にしてる？', 'この前はありがとう！', '最近は大学で科学イベントの活動をがんばってるよ。'],
     },
     mentor: {
@@ -137,7 +147,7 @@ details summary{cursor:pointer;color:var(--pink-dark);font-weight:700}
     friend: {
       subject: '大学のクラウドファンディングに挑戦してます（{名前}）',
       body: CASUAL_BODY,
-      line: '大学で入ってる「サイエンスイベント同好会HagiiZ」で、東北大学のクラウドファンディング「ともプロ！2026」に挑戦してます（{期間}、目標{目標}）。\n中身はここ → {URL}\n公式LINEもあるよ → {LINE}\nよかったら見てみて、シェアしてもらえるだけでも助かる！',
+      line: '大学で入ってる「サイエンスイベント同好会HagiiZ」で、東北大学のクラウドファンディング「ともプロ！2026」に挑戦してます（{期間}、目標{目標}）。\n中身はここ → {URL}\n公式LINEもあるよ → {LINE}\nシェア用の文と画像はここ → {キット}\nよかったら見てみて、シェアしてもらえるだけでも助かる！',
       openingExamples: ['久しぶり！元気？', 'この前はありがとう！', '急に長文ごめん！'],
     },
   };
@@ -215,7 +225,7 @@ details summary{cursor:pointer;color:var(--pink-dark);font-weight:700}
       名乗り: `${univPrefix(profile)}${profile.affiliation}の${profile.name}です。`,
       署名: profile.signature || defaultSignature(profile),
       URL: campaign.url, タイトル: campaign.title, 期間: campaign.period,
-      目標: campaign.goal, 使いみち: campaign.uses, 例: campaign.example, LINE: campaign.line,
+      目標: campaign.goal, 使いみち: campaign.uses, 例: campaign.example, LINE: campaign.line, キット: campaign.kit,
     };
   }
 
@@ -252,7 +262,7 @@ details summary{cursor:pointer;color:var(--pink-dark);font-weight:700}
     if (!String(profile.name || '').trim()) errs.push('最初の設定で名前を入れてください');
     if (!String(profile.affiliation || '').trim()) errs.push('最初の設定で所属を入れてください');
     if (!normalizeRomaji(profile.romaji)) errs.push('苗字のローマ字を英字で入れてください（CCの集計に使います）');
-    if (!EMAIL_RE.test(String(profile.account || '').trim())) errs.push('送信に使うGmailアドレスを入れてください');
+    if (!EMAIL_RE.test(String(profile.account || '').trim())) errs.push('送信に使うメールアドレスを入れてください');
     return errs;
   }
 
@@ -482,7 +492,7 @@ details summary{cursor:pointer;color:var(--pink-dark);font-weight:700}
           <select id="p-status"><option value="undergrad"${p.status === 'undergrad' ? ' selected' : ''}>学部生</option><option value="doctor"${p.status === 'doctor' ? ' selected' : ''}>大学院生（博士・修士）</option></select></div>
         <div><label for="p-aff">所属（学部・学科や研究科・専攻、学年）</label><input id="p-aff" value="${esc(p.affiliation)}" placeholder="工学部 材料科学総合学科 2年"></div>
       </div>
-      <label for="p-account">送信に使うGmailアドレス</label><input id="p-account" type="email" value="${esc(p.account)}" placeholder="xxxx@dc.tohoku.ac.jp">
+      <label for="p-account">送信に使うメールアドレス</label><input id="p-account" type="email" value="${esc(p.account)}" placeholder="xxxx@dc.tohoku.ac.jp">
       <p class="hint">このアドレスのGmailで作成画面を開きます。ブラウザで複数のGoogleアカウントにログインしていても、このアドレスが使われます。</p>
       <details data-key="sign"${openDetails.has('sign') ? ' open' : ''}><summary>署名を直す（空欄なら自動）</summary>
         <textarea id="p-sign">${esc(p.signature)}</textarea></details>
@@ -544,6 +554,11 @@ details summary{cursor:pointer;color:var(--pink-dark);font-weight:700}
   }
 
   // ---- 2. 本文を見て送る
+  // 送信の未／済を切り替えるボタン。押すたびに印が入れ替わる
+  function statusBtn(act, on, offLabel, onLabel, extraClass) {
+    return `<button class="btn status${extraClass}${on ? ' on' : ''}" data-act="${act}" aria-pressed="${on ? 'true' : 'false'}" title="押すと切り替わります">${on ? onLabel : offLabel}</button>`;
+  }
+
   // 行の骨組みだけを作る。検査結果・件名・本文などは refreshCard で埋める
   function cardSkeleton(c) {
     const k = hasKind(c.kind) ? KINDS[c.kind] : null;
@@ -570,8 +585,8 @@ details summary{cursor:pointer;color:var(--pink-dark);font-weight:700}
         <div class="btns">
           <button class="btn" data-act="open">Gmailで開く</button>
           ${k && k.line ? `<button class="btn line" data-act="line">LINE用の文をコピー</button>` : ''}
-          <button class="btn sub" data-act="sent">${c.sent ? '送った印を外す' : '送った'}</button>
-          ${k && k.line ? `<button class="btn sub" data-act="lineSent">${c.lineSent ? 'LINEの印を外す' : 'LINEで送った'}</button>` : ''}
+          ${statusBtn('sent', c.sent, '✉ メール 未送信', '✓ メール送信済み', '')}
+          ${k && k.line ? statusBtn('lineSent', c.lineSent, 'LINE 未送信', '✓ LINE送信済み', ' line-status') : ''}
           <button class="btn sub" data-act="del">削除</button>
         </div>
       </div>`;
@@ -588,6 +603,8 @@ details summary{cursor:pointer;color:var(--pink-dark);font-weight:700}
   // 入力欄はそのままにして、検査結果・件名・本文・ボタンの状態だけを書きかえる
   function refreshCard(el, c) {
     const { v, preview } = composeFor(c);
+    el.classList.toggle('is-mail-done', !!c.sent);
+    el.classList.toggle('is-line-done', !!c.lineSent && !c.sent);
     el.querySelector('[data-part="title"]').innerHTML = `${esc(c.name || '（名前未入力）')} ${c.sent ? '<span class="tag">送信済み</span>' : ''} ${c.lineSent ? '<span class="tag">LINE済み</span>' : ''}`;
     el.querySelector('[data-part="msgs"]').innerHTML =
       v.errors.map(e => `<p class="err">${esc(e)}</p>`).join('') + v.warnings.map(e => `<p class="warn">${esc(e)}</p>`).join('');
@@ -664,7 +681,7 @@ details summary{cursor:pointer;color:var(--pink-dark);font-weight:700}
           window.open(Core.buildGmailUrl({ account: state.profile.account.trim(), ...m }), '_blank', 'noopener');
           persist();
           await copied;
-          toast('Gmailを開きました。本文が空なら貼り付け（Ctrl+V）してください。送ったら「送った」を押してください');
+          toast('Gmailを開きました。本文が空なら貼り付け（Ctrl+V）してください。送ったら「メール 未送信」を押して「送信済み」にしてください');
         } else if (act === 'line') {
           if (!hasKind(c.kind)) return;
           persist();
